@@ -1,0 +1,88 @@
+<p-table #dt [value]="dados" [(selection)]="selected" [paginator]="scrollableAttr ? false : true" [scrollable]="scrollableAttr ? true : false"
+  scrollHeight="130px" [rows]="rowTable" [autoLayout]="true" styleClass="table table-striped" dataKey="keyRow">
+  <ng-template pTemplate="header" let-columns let-obj>
+    <tr>
+      <th *ngIf="rowExpanded" style="width: 2em"></th>
+      <th *ngIf="hasRadio !== '0' && hasRadio !== '2'">
+      </th>
+      <th *ngIf="hasRadio === '2'"
+        style="padding: 5px; height: -webkit-fill-available; width: 100%; display: flex; justify-content: center; align-items: center; margin: 0">
+        <p-tableHeaderCheckbox *ngIf="dados != null && dados != []" class="chk"></p-tableHeaderCheckbox>
+      </th>
+
+      <th *ngFor="let col of colunas">
+        {{col.cabecalho}}
+      </th>
+
+      <th *ngIf="activeIcons.length != 0">
+        Ações
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-obj let-expanded="expanded" let-columns="colunas">
+    <tr [ngClass]="expanded ? 'selected-row' : 'table table-striped'" [pSelectableRow]="obj">
+      <td *ngIf="rowExpanded">
+        <a href="#" [pRowToggler]="obj">
+          <i [ngClass]="expanded ? 'pi pi-chevron-down arrow-white' : 'pi pi-chevron-right'"></i>
+        </a>
+      </td>
+      <td *ngIf="hasRadio === '1'">
+        <p-tableRadioButton [value]="obj" (change)="handleChangeSelected($event)"></p-tableRadioButton>
+      </td>
+      <td *ngIf="hasRadio === '2'">
+        <p-tableCheckbox [value]="colunas" class="chk"></p-tableCheckbox>
+      </td>
+      <td *ngFor="let col of colunas">
+        <p [ngClass]="expanded ? 'arrow-white' : 'arrow-black'">
+          {{(col.date ? (namespace(obj, col.campo, col.padrao) | date: 'dd/MM/yyyy') : namespace(obj, col.campo, col.padrao))}}
+        </p>
+      </td>
+      <td *ngIf="activeIcons.length != 0">
+        <a *ngFor="let icon of activeIcons" href="javascript: " ngbTooltip="{{icon.name}}" placement="left"
+          (click)="crudRegistro(obj, icon)"><i [ngClass]="[icon.className]" class="btn-rounded btn-sm"></i></a>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="rowexpansion" let-obj let-columns="">
+    <tr style="background-color: #95BCF2 !important;">
+      <td [attr.colspan]="colunas.length + 2" style="padding: 0px 5px 5px 3em;">
+        <app-data-table-classificador [hasRadio]="'0'" [scrollableAttr]="true" class="expTable" [colunas]="colExpanded"
+          [activeIcons]="[{
+          name: 'Aceitar',
+          className: 'ti-check text-success m-r-10',
+          howFunction: '0',
+          rota: ''
+        },
+        {
+          name: 'Visualizar',
+          className: 'ti-desktop text-info m-r-10',
+          howFunction: '2',
+          rota: ''
+        }]" [dados]="(fontes$ | async)">
+        </app-data-table-classificador>
+      </td>
+    </tr>
+  </ng-template>
+  <!-- leonardo -->
+  <ng-template pTemplate="rowexpansion" let-obj let-columns="">
+    <tr style="background-color: #95BCF2 !important;">
+      <td [attr.colspan]="colunas.length + 2" style="padding: 0px 5px 5px 3em;">
+        <app-data-table-classificador [hasRadio]="'0'" [scrollableAttr]="true" class="expTable" [colunas]="colExpanded2"
+          [activeIcons]="[{
+          name: 'Detalhar',
+          className: 'fas fa-list-ul',
+          howFunction: '0',
+          rota: 'classificador/detalhe-catalogo/detalhar'
+        }]" [dados]="(catalogo$ | async)">
+        </app-data-table-classificador>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td [attr.colspan]="colunas.length+2" style="text-align: center;">
+        Nenhum registro encontrado
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

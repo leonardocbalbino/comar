@@ -1,0 +1,73 @@
+.contorno{
+  border: 1px solid #CCCCCC;
+  padding: 15px;
+  padding-bottom: -10px;
+  border-radius: 10px;
+}
+
+.overlay{
+  margin-top: -12px;
+}
+
+.overlay-text{
+  z-index: 1;
+  width: fit-content;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+
+::ng-deep .ui-calendar{
+  width: 100%;
+}
+
+::ng-deep .ui-inputtext{
+  width: calc(100% - 50px);
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #4f5467;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+}
+
+::ng-deep .ui-calendar .ui-calendar-button{
+  border: none;
+  width: 50px !important;
+  height: calc(1.5em + 0.75rem + 2px);
+  width: auto;
+  background-color: #01ACD3;
+}
+
+::ng-deep .ui-button-icon-left{
+  color: #fff;
+}
+
+::ng-deep .ui-datepicker{
+  background-color: white;
+}
+
+::ng-deep .ui-datepicker a:hover{
+  background-color: #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.formStyles{
+  border-color: #ccc;
+}
+
+.ng-select.custom ::ng-deep .ng-select-container{
+  border-radius: 0px;
+  border-color: #ccc;
+  height: calc(1.5em + 0.75rem + 2px);
+}
+
+ng-select.ng-invalid.ng-touched .ng-select-container {
+  border-color: #dc3545;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px #fde6e8;
+}

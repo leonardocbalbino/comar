@@ -1,0 +1,20 @@
+:host >>> .ui-picklist-caption {
+  background-color: #017ABD;
+  color: #fff;
+}
+:host >>> .ui-picklist-listwrapper {
+  border: 1px solid #017ABD;
+}
+:host >>> .ui-state-highlight {
+  background-color: #017ABD !important;
+  font-weight: bold !important;
+  color: #fff !important;
+}
+:host >>> .ui-picklist-list {
+  width: 300px;
+}
+:host >>> .ui-button {
+  background-color: #017ABD;
+  color: #fff;
+  width: 40px;
+}

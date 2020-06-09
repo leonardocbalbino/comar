@@ -1,0 +1,60 @@
+tr{
+  justify-items: center;
+}
+
+.inputSearch{
+  border-color: #ccc;
+}
+
+.selected-row{
+  background-color: #95BCF2 !important;
+}
+
+.arrow-white{
+  color: white;
+  margin: 0;
+}
+
+.dateVigen{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dateVigen2{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrow-black{
+  color: black;
+  margin: 0;
+}
+
+.unselected{
+  background-color: white;
+}
+
+.expTable th{
+  background-color: #F2F2F2;
+}
+
+.expTable tr{
+  background-color: #FFFFFF;
+}
+
+.date ::ng-deep.ui-inputtext{
+  width: 100%;
+  height: 30px;
+  font-size: 10px;
+}
+
+.expTable ::ng-deep.ui-paginator-bottom {
+  background-color: #FFFFFF;
+}
+
+.chk ::ng-deep.ui-chkbox-box{
+  border: 1px solid #000;
+  border-radius: 0px;
+}

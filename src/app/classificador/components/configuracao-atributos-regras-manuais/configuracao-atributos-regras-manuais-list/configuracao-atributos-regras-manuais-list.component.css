@@ -1,0 +1,54 @@
+.ng-select.custom ::ng-deep .ng-select-container{
+  border-radius: 0px;
+  border-color: #ccc;
+  height: calc(1.5em + 0.75rem + 2px);
+}
+
+ng-select.ng-invalid.ng-touched .ng-select-container {
+  border-color: #dc3545;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px #fde6e8;
+}
+
+.colorBtn{
+  background: linear-gradient(to right, #00b61e 0%, #00f829  100%) !important;
+  color: white;
+}
+
+tr{
+  justify-items: center;
+}
+
+.selected-row{
+  background-color: #95BCF2 !important;
+}
+
+.arrow-white{
+  color: white;
+  margin: 0;
+}
+
+.arrow-black{
+  color: black;
+  margin: 0;
+}
+
+.unselected{
+  background-color: white;
+}
+
+.expTable th{
+  background-color: #F2F2F2;
+}
+
+.expTable tr{
+  background-color: #FFFFFF;
+}
+
+.expTable ::ng-deep.ui-paginator-bottom {
+  background-color: #FFFFFF;
+}
+
+.chk ::ng-deep.ui-chkbox-box{
+  border: 1px solid #000;
+  border-radius: 0px;
+}

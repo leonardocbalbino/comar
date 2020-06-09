@@ -1,0 +1,56 @@
+<p-table #dt [value]="noActions ? dados : (dados?.content | paginate:{itemsPerPage: 10, currentPage:page, totalItems: dados?.totalElements})" [paginator]="noActions" [rows]="rowTable" styleClass="table table-striped" dataKey="{{noActions ? 'regraProdutoId' : 'regraManualId'}}" [responsive]="true" [autoLayout]="true">
+  <ng-template pTemplate="header" let-columns let-obj>
+    <tr>
+      <th *ngIf="rowExpanded" style="width: 2em"></th>
+
+      <th *ngFor="let col of colunas">
+        {{col.cabecalho}}
+      </th>
+
+      <th *ngIf="!noActions">
+        Ações
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-obj let-expanded="expanded" let-columns="colunas">
+    <tr>
+      <td *ngIf="rowExpanded">
+        <a href="#" [pRowToggler]="obj">
+          <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
+        </a>
+      </td>
+      <td *ngFor="let col of colunas">
+        <p>
+          {{(col.date ? (namespace(obj, col.campo, col.padrao) | date: 'dd/MM/yyyy') : namespace(obj, col.campo, col.padrao))}}
+        </p>
+      </td>
+      <td *ngIf="!noActions">
+        <button (click)="visualizarRegistro(obj)" placement="left" ngbTooltip="Visualizar" type="button" class="btn btn-info btn-rounded btn-sm"><i class="fas fa-search"></i></button>
+        <!-- <a href="javascript: " ngbTooltip="Editar" placement="left"
+          (click)="editarRegistro(obj)"><i class="ti-pencil text-info m-r-10 btn-rounded btn-sm"></i></a> -->
+          <button (click)="deletarRegistro(obj)" placement="left" ngbTooltip="Excluir" type="button" class="btn btn-danger btn-rounded btn-sm"><i class="ti-trash"></i></button>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="rowexpansion" let-obj>
+    <tr style="background-color: #95BCF2 !important;">
+      <td [attr.colspan]="noActions ? colunas.length+1 : colunas.length+2" style="padding: 0px 5px 5px 3em;">
+        <app-table-regras-produto [hasDetail]="noActions" [colunas]="hasView ? colView : colList" class="expTable" [dados]="noActions ? (obj.regrasDetalhes) : (obj.regraProdutos)">
+        </app-table-regras-produto>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td [attr.colspan]="noActions ? colunas.length+1 : colunas.length+2" style="text-align: center;">
+        {{noActions ? 'Nenhum produto encontrado' : 'Nenhuma regra manual encontrada'}}
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+<div *ngIf="!noActions" class="row justify-content-md-center">
+  <pagination-controls directionLinks="true" responsive="true"
+  (pageChange)="pageChanged($event)" (pageBoundsCorrection)="pageChanged($event)"
+  previousLabel="Anterior" nextLabel="Próximo">
+  </pagination-controls>
+</div>

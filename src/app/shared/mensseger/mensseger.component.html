@@ -1,0 +1,31 @@
+<div class="row">
+
+    <div class="col-12" *ngIf="statusMensagem === true">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title" [(ngModel)]="tituloMensagem">{{tituloMensagem}}</h3>
+                <ngb-alert [dismissible]="false" type="success">
+                    <strong>Sucesso!</strong> {{corpoMensagem}}
+                </ngb-alert>
+                <h5 class="card-subtitle">{{descricaoMensagem}}</h5>
+                <p>
+                    <button class="btn btn-info"  (click)="voltar()">Verificar lista Modelo</button>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-12" *ngIf="statusMensagem === false">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title" [(ngModel)]="tituloMensagem">{{tituloMensagem}}</h3>
+                <ngb-alert [dismissible]="false" type="danger">
+                    <strong>Sucesso!</strong> {{corpoMensagem}}
+                </ngb-alert>
+                <h5 class="card-subtitle">{{descricaoMensagem}}</h5>
+                <p >
+                    <button class="btn btn-info" (click)="voltar()">Verificar lista Modelo</button>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+          <h4 class="mb-0 text-white"> Classificação Manual de Item/Lote - Detalhe da Relação dos Iten Associados</h4>
+        </div>
+      <div class="card-body">
+        <app-data-table-classificador [hasRadio]="'0'" [colunas]="colunas" [activeIcons]="[{
+            name: 'Reclassificar',
+            className: 'ti-layers-alt text-info m-r-10',
+            howFunction: '3',
+            rota: 'classificador/classificacao-manual-item/reclassificar'
+          },
+          {
+            name: 'Visualizar',
+            className: 'ti-desktop text-info m-r-10',
+            howFunction: '2',
+            rota: 'classificador/classificacao-manual-item/visualizar'
+          }]">
+        </app-data-table-classificador>
+
+        <div class="row align-items-end justify-content-end">
+          <div class="col-sm-6 col-md-4">
+            <button type="button" class="m-t-20 btn waves-effect waves-light btn-success"><i class="fas fa-check"></i> Aceitar Classificação</button>
+            <button type="button" (click)="voltar()" class="m-t-20 btn waves-effect waves-light btn-info"><i class="fas fa-arrow-left"></i> Voltar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

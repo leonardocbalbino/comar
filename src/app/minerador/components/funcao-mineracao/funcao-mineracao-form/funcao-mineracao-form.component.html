@@ -1,0 +1,84 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+        <h4 class="mb-0 text-white">{{acao}} Função de Mineração</h4>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="funcaoMineracaoForm" novalidate>
+          <input type="hidden" formContronName="funcaoMineracaoId"/>
+          <div class="form-body">
+            <div class="row pt-3">
+              <div class="col-md-5">
+                <label>Nome</label>
+                <div class="form-group">
+                  <input class="form-control" formControlName="funcaoMineracaoNomeInterno">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <label>Alias</label>
+                <div class="form-group">
+                  <input class="form-control" formControlName="funcaoMineracaoAlias">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label>Separa Teste e Treino?</label>
+                <div class="form-group">
+                  <select class="form-control" formControlName="funcaoMineracaoSeparaDados">
+                    <option value="true">SIM</option>
+                    <option value="false">NÃO</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <h4 class="card-title">Algoritmos</h4>
+            <hr />
+            <div class="row pt-3">
+              <div class="col-md-8">
+                <label>Algoritmo da Função de Mineração:</label>
+                <div class="form-group">
+                  <div class="input-group">
+                    <select class="form-control" formControlName="algoritmo">
+                      <option *ngFor="let algoritmo of (algoritmos$ | async)" [ngValue]="algoritmo">{{algoritmo.algoritmoAlias}}</option>
+                    </select>
+                    <div class="input-group-append" style="margin-left: 3%;">
+                      <button class="btn btn-success" (click)="addToList()" type="button"><i class="fa fa-plus"></i> Adicionar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row pt-3">
+              <div class="col-md-12">
+                <table class="table table-sm m-b-0">
+                  <thead>
+                    <th>Nome</th>
+                    <th>Alias</th>
+                    <th>Supervisionado</th>
+                    <th>Ações</th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let func of algoritmosSel">
+                      <td>{{func.algoritmo.algoritmoNomeInterno}}</td>
+                      <td>{{func.algoritmo.algoritmoAlias}}</td>
+                      <td>{{func.algoritmo.algoritmoSupervisionado ? 'SIM' : 'NÃO'}}</td>
+                      <td>
+                        <button title="Excluir Registro" type="button"  (click)="remove(func)" class="btn btn-danger btn-rounded btn-sm"><i class="fas fa-trash"></i></button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                  <button (click)="salvar()" [disabled]="!funcaoMineracaoForm.valid" class="m-t-20 btn waves-effect waves-light btn-success float-right" type="button"><i class="fas fa-save"></i> Salvar</button>
+                  <button (click)="voltar()" class="m-t-20 btn waves-effect waves-light btn-info float-right" type="button"><i class="fas fa-arrow-left"></i> Voltar</button>
+              </div>
+          </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

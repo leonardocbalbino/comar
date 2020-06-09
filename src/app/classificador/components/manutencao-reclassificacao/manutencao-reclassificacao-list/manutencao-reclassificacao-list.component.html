@@ -1,0 +1,110 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+        <h4 class="mb-0 text-white"> Manutenção da Reclassificação </h4>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="consultaForm" novalidate>
+          <div class="row p-t-20">
+            <div class="row align-items-end col-md-12" style="margin-bottom: 30px; padding-right: 0;">
+              <div class="col-xs-12 col-sm-12 col-md-3 form-group">
+                <label>CNPJ Emitente:</label>
+                <input class="form-control" formControlName="cnpjEmitente">
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-3 form-group">
+                <label>CPF/CNPJ Destinatário:</label>
+                <input class="form-control" formControlName="cnpjDestinatario">
+              </div>
+              <div class="col-xs-12 col-sm-6 col-md-2 form-group">
+                <label>Data Inicio NF-e:</label>
+                <div>
+                  <p-calendar formControlName="dataInicioNfe" dateFormat="dd/mm/yy" placeholder="dd/mm/aaaa" [showIcon]="true"
+                    [locale]="pt" appendTo="body" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030"
+                    showButtonBar="true">
+                  </p-calendar>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-6 col-md-2 form-group">
+                <label>Data Fim NF-e:</label>
+                <div>
+                  <p-calendar formControlName="dataFimNfe" dateFormat="dd/mm/yy" placeholder="dd/mm/aaaa" [showIcon]="true"
+                    [locale]="pt" appendTo="body" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030"
+                    showButtonBar="true">
+                  </p-calendar>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-2 form-group">
+                <label>Número NF-e:</label>
+                <input class="form-control" formControlName="numeroNfe">
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-4 form-group">
+                <label>Segmento:</label>
+                <ng-select [items]="$hierarquias | async" bindLabel="hierarquiaNome" [clearable]="true"
+                (change)="changeSegmento()"
+                  bindValue="hierarquiaId" notFoundText="Nenhum segmento encontrado" formControlName="segmentoId">
+                </ng-select>
+              </div>
+              <div class="col-xs-12 col-sm-5 col-md-2 form-group">
+                <label>Data Reclassificação:</label>
+                <div>
+                  <p-calendar formControlName="dataReclassificacao" dateFormat="dd/mm/yy" placeholder="dd/mm/aaaa" [showIcon]="true"
+                    [locale]="pt" appendTo="body" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030"
+                    showButtonBar="true">
+                  </p-calendar>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label>Produto:</label>
+                <ng-select [items]="$produtos | async" bindLabel="produtoNome" [clearable]="true" bindValue="produtoId"
+                  notFoundText="Nenhum produto encontrado" formControlName="produtoId">
+                </ng-select>
+              </div>
+              <div class="col-xs-12 col-sm-3 col-md-2 form-group">
+                <button (click)="localizar()" type="button" class="btn btn-info form-control"
+                  style="margin-bottom: 0px; margin-top: 8px;"><i class="fa fa-search"></i>
+                  Localizar</button>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <p-table
+                [value]="itens?.content | paginate:{itemsPerPage: 10, currentPage:p, totalItems: itens?.totalElements}"
+                [responsive]="true" [rows]="10" [autoLayout]="true" styleClass="table table-striped">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th>Nota Fiscal</th>
+                    <th>Data NFe</th>
+                    <th>Segmento</th>
+                    <th>Item da Nota</th>
+                    <th>Produto Associado</th>
+                    <th>Dt. Reclassificação</th>
+                    <th>Ação</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item>
+                  <tr>
+                    <td>{{item.numeroNota}}</td>
+                    <td>{{item.dataNota | date:'dd/MM/yyyy'}}</td>
+                    <td>{{item.segmento}}</td>
+                    <td>{{item.itemNotaFiscal}}</td>
+                    <td>{{item.produtoAssociado}}</td>
+                    <td>{{item.dataReclassificacao | date:'dd/MM/yyyy'}}</td>
+                    <td>
+                      <div style="display: block; width: 80px;">
+                        <button (click)="visualizar(item)" title="Visualizar" type="button"
+                          class="btn btn-info btn-rounded btn-sm"><i class="fas fa-search"></i></button>
+                        <button (click)="editar(item)" title="Editar" type="button"
+                          class="btn btn-success btn-rounded btn-sm"><i class="fas fa-edit"></i></button>
+                      </div>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

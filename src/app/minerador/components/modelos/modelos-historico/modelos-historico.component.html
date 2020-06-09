@@ -1,0 +1,304 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card card-outline-info">
+            <div class="card-header">
+                <h4 class="mb-0 text-white">Histórico de Modelo de Mineração</h4>
+            </div>
+            <div class="card-body">
+                <div class="row ">
+                    <div class="col-md-3">
+                        <label>Nome Modelo</label>
+                        <div class="form-group">
+                            <input class="form-control" disabled [(ngModel)]="modelo.modeloNome">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Função de Mineração</label>
+                        <div class="form-group">
+                            <input class="form-control" disabled [(ngModel)]="modelo.funcaoMineracao.funcaoMineracaoAlias">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Algoritmo</label>
+                        <div class="form-group">
+                            <input class="form-control" disabled [(ngModel)]="modelo.algoritmo.algoritmoAlias">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Atributo-alvo</label>
+                        <div class="form-group">
+                            <input class="form-control" disabled [(ngModel)]="atributoAlvo">
+                        </div>
+                    </div>
+                </div>
+                <ngb-tabset #t="ngbTabset">
+                    <ngb-tab title="Evento" id="evento">
+                        <ng-template ngbTabContent>
+                            <p-table #dt [value]="historicos | async" [paginator]="true" [rows]="10" [autoLayout]="true" styleClass="table table-striped"
+                                [sortOrder]="-1">
+                                <ng-template pTemplate="header" let-columns>
+                                    <tr>
+                                        <th scope="col">Data</th>
+                                        <th scope="col">Evento</th>
+                                        <th scope="col">Usuário</th>
+                                        <th scope="col">Ação</th>
+                                    </tr>
+
+                                </ng-template>
+                                <ng-template pTemplate="body" let-historico>
+                                    <tr>
+                                        <td>{{(historico.historicoData | date: 'dd/MM/yyyy HH:mm')}}</td>
+                                        <td>{{historico.descricaoHistorico}}</td>
+                                        <td>{{historico.usuario.usuarioNome}}</td>
+                                        <td *ngIf="historico.historicoEvento === 'TESTADO'">
+                                            <button title="Detalhe" type="button" (click)="detalheHistorico(historico.historicoId,t)" class="btn btn-success btn-rounded btn-sm">
+                                                <i class="fas fa-search"></i>
+                                            </button>
+                                        </td>
+                                        <td *ngIf="historico.historicoErro !== null">
+                                            <button href="javascript:" title="Exibir Erro" type="button" (click)="exibirErro(historico.historicoErro)" class="btn btn-warning btn-rounded btn-sm">
+                                                <i class="fas fa-warning"></i>
+                                            </button>
+                                        </td>
+                                        <td *ngIf="historico.historicoEvento != 'TESTADO' && historico.historicoErro === null">
+                                            <i class="ti-minus text-info m-r-10"></i>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="emptymessage">
+                                    <tr>
+                                        <td [attr.colspan]="listaHistorico.length">
+                                            Nenhum registro encontrado
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </ng-template>
+                        <ng-template #modalErro let-modal>
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="modal-basic-title">Erro no processamento</h4>
+                                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="col-md-12">
+                                    <strong>{{erro}}</strong>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Cross click')">Fechar</button>
+                            </div>
+                        </ng-template>
+                    </ngb-tab>
+                    <ngb-tab title="Detalhe" id="detalhe" *ngIf="tab">
+                        <ng-template *ngIf='!clusterizacao' ngbTabContent>
+                            <h3 class="card-title" style="margin-top: 20px">Detalhes do teste do dia {{(historico.historicoData | date: 'dd/MM/yyyy' )}}</h3>
+                            <h5 class="card-title" style="margin-top: 20px">Grupo de Teste: Grupo {{(historico.dadosTeste.grupo.grupoNome)}} </h5>
+                            <div class="row">
+                                <!-- Column -->
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Acurácia do Modelo (Teste Atual)</h4>
+                                            <div class="text-right">
+                                                <h2 class="font-light  font-weight-normal m-b-0">
+                                                    <i class="ti-pulse text-info"></i>
+                                                    {{(historico.dadosTeste.dadosTesteAcuracia * 100) | number }} %</h2>
+                                            </div>
+                                            <ngb-progressbar [showValue]="false" type="info" [value]="100">
+                                            </ngb-progressbar>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Acurácia Média do Modelo (Todos os Testes)</h4>
+                                            <div class="text-right">
+                                                <h2 class="font-light  font-weight-normal m-b-0">
+                                                    <i class="ti-pulse text-info"></i>
+                                                    {{acuracia.acuraciaMedia | number}} %</h2>
+                                            </div>
+                                            <ngb-progressbar [showValue]="false" type="info" [value]="100">
+                                            </ngb-progressbar>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <!-- Column -->
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">% de Valores Corretos(A/B)</h4>
+                                            <div class="text-right" style="margin-top: 32px;">
+                                                <h2 class="font-light  font-weight-normal m-b-0">
+                                                    {{(previsao1 * 100).toFixed(2) | number }} %</h2>
+                                            </div>
+                                            <ngb-progressbar [showValue]="false" type="info" [value]="100">
+                                            </ngb-progressbar>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">(A) Total de Valores Corretos (Soma dos Acertos de C)
+                                            </h4>
+                                            <div class="text-right">
+                                                <h2 class="font-light  font-weight-normal m-b-0">
+                                                    {{previsao2}}</h2>
+                                            </div>
+                                            <ngb-progressbar [showValue]="false" type="info" [value]="100">
+                                            </ngb-progressbar>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">(B) Total de Valores Analisados (Total de Linhas de D)
+                                            </h4>
+                                            <div class="text-right">
+                                                <h2 class="font-light  font-weight-normal m-b-0">
+                                                    {{previsao3}}</h2>
+                                            </div>
+                                            <ngb-progressbar [showValue]="false" type="info" [value]="100">
+                                            </ngb-progressbar>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6">
+                                    <h3 class="card-title" style="margin-top: 20px">Análise dos Valores (C)</h3>
+
+                                    <p-table #dtAnalise [value]="analise.linhas" [paginator]="true" [autoLayout]="true" [rows]="10" styleClass="table table-striped">
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th *ngFor="let colAnalise of analise.colunas">
+                                                    {{colAnalise.nome}}
+                                                </th>
+                                            </tr>
+
+                                            <tr>
+                                                <th *ngFor="let colAnalise of analise.colunas; let i = index">
+                                                    <input *ngIf="i === 0" [ngModel]="analiseResult" pInputText class="form-control" type="text" (input)="dtAnalise.filter($event.target.value, i, 'equals')">
+                                                    <input *ngIf="i > 0" pInputText class="form-control" type="text" (input)="dtAnalise.filter($event.target.value, i, 'equals')">
+                                                </th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-row>
+                                            <tr>
+                                                <td *ngFor="let linhas of analise.colunas; let i = index">
+                                                    <a *ngIf="i === 0" (click)="seleciona(row[i], i)">
+                                                        <a href="javascript:void(0)">
+                                                            <i class="ti-filter text-info m-r-10"></i>
+                                                        </a>
+                                                        <span>{{(i === 1 ? row[i] * 100 : row[i])}}</span>
+                                                    </a>
+                                                    <span *ngIf="i > 0">
+                                                        <!-- {{(i === 1 ? (row[i] * 100 | number ) : row[i])}} -->
+                                                        {{row[i]}}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <h3 class="card-title" style="margin-top: 20px">Análise das Previsões (D)</h3>
+                                    <p-table #dtMatriz [value]="matriz.linhas" [paginator]="true" [rows]="10" [autoLayout]="true" styleClass="table table-striped">
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th *ngFor="let colMatriz of matriz.colunas">
+                                                    {{colMatriz.nome}}
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th *ngFor="let colMatriz of matriz.colunas; let i = index">
+                                                    <input *ngIf="i === 0" [ngModel]="analiseResult" pInputText class="form-control" type="text" (input)="dtMatriz.filter($event.target.value, i, 'equals')">
+                                                    <input *ngIf="i > 0" pInputText class="form-control" type="text" (input)="dtMatriz.filter($event.target.value, i, 'equals')">
+                                                </th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-row>
+                                            <tr [class.checked]="row[0]===row[1]">
+                                                <td *ngFor="let linhas of matriz.colunas; let i = index">
+                                                    {{row[i]}}
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                            </div>
+
+                        </ng-template>
+                        <ng-template *ngIf='clusterizacao' ngbTabContent>
+                            <h3 class="card-title" style="margin-top: 20px">Detalhes do teste do dia {{(historico.historicoData | date: 'dd/MM/yyyy' )}}</h3>
+                            <h5 class="card-title" style="margin-top: 20px">Grupo de Teste: Grupo {{(historico.dadosTeste.grupo.grupoNome)}} </h5>
+                            <div class="col-lg-12 col-md-12">
+                                <h3 class="card-title" style="margin-top: 20px">Análise das Previsões (D)</h3>
+                                <p-table #dtMatriz [value]="matriz.linhas" [paginator]="true" [rows]="10" [autoLayout]="true" styleClass="table table-striped">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th *ngFor="let colMatriz of matriz.colunas">
+                                                {{colMatriz.nome}}
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th *ngFor="let colMatriz of matriz.colunas; let i = index">
+                                                <input *ngIf="i === 0" [ngModel]="analiseResult" pInputText class="form-control" type="text" (input)="dtMatriz.filter($event.target.value, i, 'equals')">
+                                                <input *ngIf="i > 0" pInputText class="form-control" type="text" (input)="dtMatriz.filter($event.target.value, i, 'equals')">
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-row>
+                                        <tr [class.checked]="row[0]===row[1]">
+                                            <td *ngFor="let linhas of matriz.colunas; let i = index">
+                                                {{row[i]}}
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                            <div class="col-lg-12 col-md-12">
+                                <h3 class="card-title" style="margin-top: 20px">Análise das Previsões (D)</h3>
+                                <p-table #dtMatriz [value]="matriz.linhas" [paginator]="true" [rows]="10" [autoLayout]="true" styleClass="table table-striped">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th *ngFor="let colMatriz of matriz.colunas">
+                                                {{colMatriz.nome}}
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th *ngFor="let colMatriz of matriz.colunas; let i = index">
+                                                <input *ngIf="i === 0" [ngModel]="analiseResult" pInputText class="form-control" type="text" (input)="dtMatriz.filter($event.target.value, i, 'equals')">
+                                                <input *ngIf="i > 0" pInputText class="form-control" type="text" (input)="dtMatriz.filter($event.target.value, i, 'equals')">
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-row>
+                                        <tr [class.checked]="row[0]===row[1]">
+                                            <td *ngFor="let linhas of matriz.colunas; let i = index">
+                                                {{row[i]}}
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </ng-template>
+                    </ngb-tab>
+                </ngb-tabset>
+                <div class="text-right">
+                    <button type="button" *ngIf='filtros' (click)="limpaFiltros()" class="btn btn-danger" style="float:right">
+                        <i class="ti-brush-alt m-r-10"></i> Limpar Filtros</button>
+                    <button type="button" (click)="voltar()" class="btn btn-default" style="float:right">
+                        <i class="fas fa-arrow-left"></i> Voltar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

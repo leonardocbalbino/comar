@@ -1,0 +1,112 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card card-outline-info">
+            <div class="card-header">
+                <h4 class="mb-0 text-white">Mapeamento dos Atributos do Modelo/Agente de Classificação</h4>
+              </div>
+            <!-- <div class="card-body">
+                <div class="row p-t-20">
+
+                    <div class="col-md-3">
+                        <label>Nome do Modelo</label>
+                        <div class=" form-group" >
+                            <input class="form-control formStyles" type="text"
+                            class="produtoCat" formControlName="modeloNome">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-2 form-group space-between" style="margin-bottom: 0;">
+                        <label>Função de mineração:</label>
+                        <ng-select class="custom"
+                          notFoundText="Nenhuma função encontrado"
+                          [items]="funcao$ | async"
+                          bindValue="funcaoMineracaoId" bindLabel="funcaoMineracaoAlias"
+                          formControlName="funcaoMineracaoId">
+                        </ng-select>
+                      </div>
+                    <div class="col-xs-12 col-md-2 form-group space-between" style="margin-bottom: 0;">
+                        <label>Algoritmo:</label>
+                        <ng-select class="custom"
+                          notFoundText="Nenhum algoritmo encontrado"
+                          [items]="algoritmo$ | async"
+                          bindLabel="algoritmoAlias">
+                        </ng-select>
+                      </div>
+
+                      <div class="col-xs-12 col-md-3" style="margin-bottom: 0;">
+                        <label>Confiança Preditiva (%):</label>
+                        <div class="row custom" style="margin: 0;">
+                          <ng-select class="custom" style=" width: calc(30% - 1px); margin-right: 2px"
+                                    [items]="sinais" [clearable]="false">
+                          </ng-select>
+                          <ng-select class="custom" style=" width: calc(30% - 1px);"
+                                      [items]="valores" bindLabel="descricao"
+                                      [clearable]="false">
+                          </ng-select>
+                        </div>
+                      </div>
+                      <div class="col-xs-12 col-md-2" style="padding-right: 0;">
+                        <button (click)="localizar()" type="button" class="btn btn-info form-control" style="margin-top: 25px; margin-right: 0;">
+                          Localizar</button>
+                      </div>
+
+                </div>
+            </div> -->
+            <form class="col-12 row" [formGroup]="consultaForm" novalidate style="margin: 0; margin-top: 20px;">
+              <div class="col-xs-12 col-sm-12 col-md-3 form-group d-flex flex-column justify-content-end">
+                <label>Nome do modelo:</label>
+                <input type="text" class="form-control formStyles"
+                formControlName="modeloNome">
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-2 form-group d-flex flex-column justify-content-end">
+                <label>Função de mineração:</label>
+                <ng-select formControlName="funcaoMineracaoId"
+                [items]="funcao$ | async" bindValue="funcaoMineracaoId" (change)="changeFuncao()"
+                bindLabel="funcaoMineracaoAlias" class="custom"
+                notFoundText="Nenhuma função de mineração encontrada">
+                </ng-select>
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-2 form-group d-flex flex-column justify-content-end">
+                <label>Algoritmo:</label>
+                <ng-select formControlName="algoritmoId" [items]="algoritmos"
+                [readonly]="algoritmos.length > 0 ? false : true" bindValue="algoritmo.algoritmoId"
+                bindLabel="algoritmo.algoritmoAlias" class="custom" notFoundText="Nenhum algoritmo encontrado">
+                </ng-select>
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-3 form-group d-flex flex-column justify-content-end">
+                <label>% Acurácia:</label>
+                <div class="d-flex flex-row">
+                  <div style="padding-left: 0; padding-right: 5px;"class="col-xs-12 col-sm-4 col-md-6">
+                    <ng-select formControlName="operador" [items]="sinaisConfianca"
+                    (change)="onChangeSinais()" class="custom"
+                    notFoundText="Nenhum registro encontrado">
+                    </ng-select>
+                  </div>
+                  <div style="padding-left: 5px; padding-right: 0;" class="col-xs-12 col-sm-8 col-md-6">
+                    <ng-select formControlName="confiancaPreditiva"
+                    [readonly]="consultaForm.value.operador == null ? true : false"
+                    [items]="numeros0a100"
+                    class="custom" notFoundText="Nenhum registro encontrado">
+                    </ng-select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-2 form-group d-flex align-items-end" style="padding-left: 5px;">
+                <button class="btn btn-info col-12" (click)="localizar()" style="height: calc(1.5em + 0.75rem + 2px);  min-height: 36px;">Localizar</button>
+              </div>
+            </form>
+
+            <div class="card-body">
+                 <div>
+                     <app-table-mapeamento-list
+                    [consultaForm]="consultaForm"
+                    [colunas]="colunas" [dados]="modelos">
+                    </app-table-mapeamento-list>
+                  </div>
+                <div class="text-right">
+                    <button type="button" (click)="voltar()" class="btn btn-default" style="float:right">
+                        <i class="fas fa-arrow-left"></i> Voltar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

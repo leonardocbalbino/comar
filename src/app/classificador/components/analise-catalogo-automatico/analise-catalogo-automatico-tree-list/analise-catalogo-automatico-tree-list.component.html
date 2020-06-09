@@ -1,0 +1,55 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+          <h4 class="mb-0 text-white"> Análise de Catálogo Automático </h4>
+        </div>
+      <div class="card-body">
+        <div class="row p-t-20">
+          <div class="col-md-12 row">
+            <div class="col-md-6" style="padding: 0px 10px 0px 10px; margin-bottom: 10px; height: 576px;">
+              <h4 style="color: #3E5569;">Grupos Encontrados</h4>
+              <div style="border: 1px solid #CCCCCC; width: 100%; height: calc(100% - 29px);">
+                <p-tree class="treeCustom" [value]="filesTree5" selectionMode="single" [(selection)]="fileSelected"
+                  (contextmenu)="hideContextMenu($event, cm)" [contextMenu]="cm" emptyMessage="Nenhum cluster encontrado!">
+                  <ng-template let-node pTemplate="default">
+                    <app-analise-catalogo-automatico-node-cell #nodeCell [node]="node"
+                      (changeValueNode)="changeValueNode($event)" (hideContextMenu)="setIsShowingCM($event)">
+                    </app-analise-catalogo-automatico-node-cell>
+                  </ng-template>
+                </p-tree>
+                <p-contextMenu #cm [model]="items" appendTo="body"></p-contextMenu>
+              </div>
+            </div>
+            <div class="col-md-6" style="padding: 0px 10px 0px 10px; height: 576px;">
+              <h4 style="color: #3E5569;">Selecionados</h4>
+              <div class="align-items-end justify-content-end" style="border: 1px solid #CCCCCC; width: 100%;">
+                <div class="conteinerTable" style="width: 100%;">
+                  <p-table [value]="nodes" [scrollable]="true" scrollHeight="160px" styleClass="table table-striped">
+                    <ng-template pTemplate="body" let-node>
+                      <tr style="margin-left: 10px;">
+                        <td>{{node.label}}</td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
+                </div>
+                <button class="btn btn-info col-md-12" (click)="criarNovo(nodes)" style="margin: 0;">Criar Novo</button>
+              </div>
+              <div style="width: 100%; margin-top: 10px; height: 323px;">
+                <h4 class="card-title overlay-text"
+                  style="margin: 0; color: #3E5569; background-color: white; margin-left: 20px;">Catálogo</h4>
+                <div class="contorno overlay" style="padding: 30px; height: 100%;">
+                  <div class="form-group">
+                    <label for="selAtributo" style="display: block;">Segmento:</label>
+                    <ng-select class="custom" notFoundText="Nenhum grupo encontrado">
+                    </ng-select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

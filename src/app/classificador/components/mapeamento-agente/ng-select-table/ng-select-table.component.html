@@ -1,0 +1,5 @@
+<div>
+  <ng-select appendTo="body" class="custom" [(ngModel)]="atributoSelecionado" (change)="onChangeAttr($event)"
+  [items]="itensValidos" bindLabel="atributoNome" notFoundText="Nenhum registro do tipo {{type}}">
+  </ng-select>
+</div>

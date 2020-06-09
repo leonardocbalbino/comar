@@ -1,0 +1,56 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+        <h4 class="mb-0 text-white">{{acao}} Origem Integração</h4>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="origemForm" novalidate>
+          <input type="hidden" formContronName="origemId"/>
+          <div class="form-body">
+            <div class="row pt-3">
+              <div class="col-md-4">
+                <label>Nome</label>
+                <div class="form-group">
+                  <input class="form-control" formControlName="origemNome">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <label>Alias</label>
+                <div class="form-group">
+                  <input class="form-control" formControlName="origemAlias">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <label>DBLink</label>
+                <div class="form-group">
+                  <input class="form-control" formControlName="origemDblink">
+                </div>
+              </div>
+            </div>
+            <div class="row pt-3">
+              <div class="col-md-2">
+                <label>IP</label>
+                <div class="form-group">
+                  <input class="form-control" formControlName="origemIp">
+                </div>
+              </div>
+              <div class="col-md-2">
+                <label>Porta</label>
+                <div class="form-group">
+                  <input type="number" class="form-control" maxlength="5" formControlName="origemPorta">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                  <button (click)="salvar()" [disabled]="!origemForm.valid" class="m-t-20 btn waves-effect waves-light btn-success float-right" type="button"><i class="fas fa-save"></i> Salvar</button>
+                  <button (click)="voltar()" class="m-t-20 btn waves-effect waves-light btn-info float-right" type="button"><i class="fas fa-arrow-left"></i> Voltar</button>
+              </div>
+          </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

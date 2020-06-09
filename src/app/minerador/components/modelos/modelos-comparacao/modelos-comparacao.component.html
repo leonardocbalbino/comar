@@ -1,0 +1,139 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card card-outline-info">
+            <div class="card-header">
+                <h4 class="mb-0 text-white">Comparação de Modelos de Mineração</h4>
+            </div>
+            <div class="card-body">
+                <div style="margin-top:20px">
+                    <p-table #dt [value]="modelo" [rows]="10" [autoLayout]="true" styleClass="table table-striped">
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th scope="col">Modelo</th>
+                                <th scope="col">Função</th>
+                                <th scope="col">Algoritmo</th>
+                                <th scope="col">Atributo Alvo</th>
+                                <th scope="col">% Acurácia do Modelo</th>
+                                <th scope="col">% de Valores Corretos</th>
+                                <th scope="col">% Acurácia Média</th>
+                                <th scope="col">Grupo Teste</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-modelo>
+                            <tr>
+                                <td>{{modelo.nome}}</td>
+                                <td>{{modelo.funcao}}</td>
+                                <td>{{modelo.algoritmo}}</td>
+                                <td>{{modelo.atributoAlvo}}</td>
+                                <td>{{modelo.acuraciaModelo | number}}</td>
+                                <td>{{modelo.previsao | number}}</td>
+                                <td>{{modelo.acuraciaMedia | number}}</td>
+                                <td>{{modelo.grupo}}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+                <div class="row" style="margin-top:50px">
+                    <div class="col-md-4">
+                        <h5 class="card-title">Acurácia do Modelo </h5>
+                        <p-chart type="bar" style="margin-top: 10px" [options]="options"
+                            (onDataSelect)="selectData($event)" [data]="data" [responsive]="true">
+                        </p-chart>
+                    </div>
+                    <div class="col-md-4">
+                        <h5 class="card-title">Acurácia Média do Modelo </h5>
+                        <p-chart type="bar" style="margin-top: 10px" [options]="options"
+                            (onDataSelect)="selectData($event)" [data]="dataMedia" [responsive]="true"></p-chart>
+                    </div>
+                    <div class="col-md-4">
+                        <h5 class="card-title">% de Valores Corretos</h5>
+                        <p-chart type="bar" style="margin-top: 10px" [options]="options"
+                            (onDataSelect)="selectData($event)" [data]="previsaoCorreta" [responsive]="true"></p-chart>
+                    </div>
+                </div>
+
+                <div *ngIf="chart" style="margin-top: 50px;">
+                    <h2 class="card-title" style="margin-top: 20px">Modelo {{nomeModelo}}</h2>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6">
+                            <h3 class="card-title" style="margin-top: 20px">Análise dos Valores </h3>
+
+                            <p-table #dtAnalise [value]="analise.linhas" [paginator]="true" [autoLayout]="true"
+                                [rows]="10" styleClass="table table-striped">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th *ngFor="let colAnalise of analise.colunas">
+                                            {{colAnalise.nome}}
+                                        </th>
+                                    </tr>
+
+                                    <tr>
+                                        <th *ngFor="let colAnalise of analise.colunas; let i = index">
+                                            <input *ngIf="i === 0" [ngModel]="analiseResult" pInputText
+                                                class="form-control" type="text"
+                                                (input)="dtAnalise.filter($event.target.value, i, 'equals')">
+                                            <input *ngIf="i > 0" pInputText class="form-control" type="text"
+                                                (input)="dtAnalise.filter($event.target.value, i, 'equals')">
+                                        </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-row>
+                                    <tr>
+                                        <td *ngFor="let linhas of analise.colunas; let i = index">
+                                            <a *ngIf="i === 0" (click)="seleciona(row[i], i)">
+                                                <a href="javascript:void(0)"><i
+                                                        class="ti-filter text-info m-r-10"></i></a><span>{{(i === 1 ? row[i] * 100 : row[i])}}</span>
+                                            </a>
+                                            <span *ngIf="i > 0">
+                                               <!-- {{(i === 1 ? (row[i] * 100 | number ) : row[i])}} -->
+                                               {{row[i]}}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <h3 class="card-title" style="margin-top: 20px">Análise das Previsões </h3>
+                            <p-table #dtMatriz [value]="matriz.linhas" [paginator]="true" [rows]="10"
+                                [autoLayout]="true" styleClass="table table-striped">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th *ngFor="let colMatriz of matriz.colunas">
+                                            {{colMatriz.nome}}
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th *ngFor="let colMatriz of matriz.colunas; let i = index">
+                                            <input *ngIf="i === 0" [ngModel]="analiseResult" pInputText
+                                                class="form-control" type="text"
+                                                (input)="dtMatriz.filter($event.target.value, i, 'equals')">
+                                            <input *ngIf="i > 0" pInputText class="form-control" type="text"
+                                                (input)="dtMatriz.filter($event.target.value, i, 'equals')">
+                                        </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-row>
+                                    <tr [class.checked]="row[0]===row[1]">
+
+                                        <td *ngFor="let linhas of matriz.colunas; let i = index">
+                                            {{row[i]}}
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="text-right" style="margin-top: 10px;">
+                    <button type="button" *ngIf='filtros' (click)="limpaFiltros()" class="btn btn-danger"
+                        style="float:right">
+                        <i class="ti-brush-alt m-r-10"></i> Limpar Filtros</button>
+                    <button type="button" (click)="voltar()" class="btn btn-default" style="float:right">
+                        <i class="fas fa-arrow-left"></i> Voltar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

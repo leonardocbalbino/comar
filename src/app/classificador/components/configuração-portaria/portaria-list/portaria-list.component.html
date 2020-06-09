@@ -1,0 +1,99 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card card-outline-info">
+            <div class="card-header">
+                <h4 class="mb-0 text-white">Configuração da Portaria</h4>
+              </div>
+            <div class="card-body">
+                <div class="row p-t-20">
+
+                    <div class="col-md-3">
+                        <label>Número</label>
+                        <div class=" form-group" >
+                            <input class="form-control" class="produtoCat" placeholder="Localizar..." >
+                        </div>
+                    </div> 
+
+                    <div class="col-md-5">
+                        <label>Finalidade</label>
+                        <div class=" form-group" >
+                            <input class="form-control" class="produtoCat">
+                        </div>
+                    </div> 
+
+                    <div class="col-xs-12 col-sm-6 col-md-2 form-group">
+                        <label>Data Publicação de:</label>
+                        <div>
+                          <p-calendar [(ngModel)]="date1" dateFormat="dd/mm/yy" placeholder="dd/mm/aaaa" [showIcon]="true"
+                            [locale]="pt" appendTo="body" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030"
+                            [readonlyInput]="true">
+                          </p-calendar>
+                        </div>
+                      </div>
+
+                      <div class="col-xs-12 col-sm-6 col-md-2 form-group">
+                        <label>Data Publicação até:</label>
+                        <div>
+                          <p-calendar [(ngModel)]="date1" dateFormat="dd/mm/yy" placeholder="dd/mm/aaaa" [showIcon]="true"
+                            [locale]="pt" appendTo="body" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030"
+                            [readonlyInput]="true">
+                          </p-calendar>
+                        </div>
+                      </div>
+
+                      <div class="col-xs-12 col-sm-6 col-md-2 form-group">
+                        <label>Data Vencimento de:</label>
+                        <div>
+                          <p-calendar [(ngModel)]="date1" dateFormat="dd/mm/yy" placeholder="dd/mm/aaaa" [showIcon]="true"
+                            [locale]="pt" appendTo="body" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030"
+                            [readonlyInput]="true">
+                          </p-calendar>
+                        </div>
+                      </div>
+
+                      <div class="col-xs-12 col-sm-6 col-md-2 form-group">
+                        <label>Data Vencimento até:</label>
+                        <div>
+                          <p-calendar [(ngModel)]="date1" dateFormat="dd/mm/yy" placeholder="dd/mm/aaaa" [showIcon]="true"
+                            [locale]="pt" appendTo="body" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030"
+                            [readonlyInput]="true">
+                          </p-calendar>
+                        </div>
+                      </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+              <div>
+                      <label >Portarias</label>
+                      <app-data-table-classificador
+                      [colunas]="colunas"
+                      [hasRadio]="'0'"
+                      [dados]="(fontes$ | async)"
+                      [activeIcons]="[{
+                          name: 'Visualizar Anexo',
+                          className: 'ti-file text-info m-r-10',
+                          howFunction: '0'
+                        },
+                        {
+                          name: 'Alterar',
+                          className: 'ti-pencil text-info m-r-10',
+                          howFunction: '0',
+                          rota: '/classificador/configuracao-portaria/edicao'
+                        },
+                        {
+                          name: 'Excluir',
+                          className: 'ti-trash text-danger m-r-10',
+                          howFunction: '0'
+                        }]">
+                      </app-data-table-classificador>
+              </div>
+              <div class="text-right">
+                  <button type="button" (click)="voltar()" class="btn btn-default" style="float:right">
+                      <i class="fas fa-arrow-left"></i>Voltar</button>
+              </div>
+          </div>
+
+        </div>
+    </div>
+</div>

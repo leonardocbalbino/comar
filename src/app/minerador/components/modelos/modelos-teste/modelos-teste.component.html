@@ -1,0 +1,95 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card card-outline-info">
+            <div class="card-header">
+                <h4 class="mb-0 text-white">Testar Modelo de Mineração</h4>
+            </div>
+            <div class="card-body">
+                <div class="row p-t-20">
+                    <div class="col-md-3">
+                        <label>Nome do Modelo</label>
+                        <div class="form-group">
+                            <input [disabled]="true" class="form-control" [(ngModel)]="modelo.modeloNome">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Grupo de teste</label>
+                        <div *ngIf="!modeloTestado" class="form-group">
+                            <ng-select [items]="grupo$ | async" bindLabel="grupoNome"
+                                notFoundText="Nenhum grupo encontrado" (change)="onChangeGrupo()" [(ngModel)]="grupo">
+                            </ng-select>
+                        </div>
+                        <div *ngIf="modeloTestado"  class="form-group">
+                                <ng-select [disabled]="true" [items]="grupo$ | async" bindLabel="grupoNome"
+                                    notFoundText="Nenhum grupo encontrado" (change)="onChangeGrupo()" [(ngModel)]="grupo">
+                                </ng-select>
+                            </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Total de registros do Grupo</label>
+                        <div class="form-group">
+                            <input [disabled]="true" class="form-control" [(ngModel)]="grupoTotalRegistro">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <label>% dados de grupo</label>
+                        <div *ngIf="modeloTestado" class="form-group">
+                            <ng-select [disabled]="true" [items]="listaPercentual" bindLabel="descricao" bindValue="valor" [(ngModel)]="modeloPercentGrupo">
+                            </ng-select>
+                        </div>
+                        <div *ngIf="!modeloTestado" class="form-group">
+                                <ng-select [items]="listaPercentual" bindLabel="descricao" bindValue="valor" [(ngModel)]="modeloPercentGrupo">
+                                </ng-select>
+                        </div>
+                    </div>
+                </div>
+                <h4 class="card-title" style="margin-top: 20px;">Atributos Cadastrados</h4>
+                <ngb-alert *ngIf="atributosDefaults && !modeloTestado" [dismissible]="false" type="info">
+                        <strong>Aviso</strong> Os atributos já estão pré-carregados para realização do teste. Caso queira alterar, selecione um novo Grupo.                     
+                </ngb-alert>
+                <ngb-alert *ngIf="modeloTestado" [dismissible]="false" type="info">
+                        <strong>Aviso</strong> Este modelo não pode ser mais testado.                     
+                </ngb-alert>
+                <div *ngFor='let atributos of listaAtributos;index as i' class="row p-t-20">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <input [disabled]="true" class="form-control"
+                                [(ngModel)]="atributos.atributo.atributoAlias">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <input [disabled]="true" class="form-control" [(ngModel)]="atributos.atributoModeloTipo">
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div *ngIf="modeloTestado" class="form-group">                                                        
+                              <select [disabled]="true" *ngIf="atributosDefaults" class="form-control" (ngModelChange)='cadastraAtributo(atributos,$event)' >                           
+                                    <option >{{atributos.atributo.atributoAlias}}</option>
+                              </select>
+                        </div>
+                        <div *ngIf="!modeloTestado" class="form-group">
+                                <ng-select *ngIf="!atributosDefaults" [items]="atributos$ | async" bindLabel="atributo.atributoAlias" 
+                                    bindValue="atributo.atributoId" notFoundText="Nenhum atributo encontrado"
+                                    (change)="cadastraAtributo(atributos,$event)" >                                
+                                </ng-select>
+                                  <select *ngIf="atributosDefaults" class="form-control" (ngModelChange)='cadastraAtributo(atributos,$event)' >                           
+                                        <option >{{atributos.atributo.atributoAlias}}</option>
+                                  </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="modeloTestado" class="text-right col-md-12" style="margin-bottom: 20px;">
+                <button type="button" (click)="voltar()" class="btn btn-default" style="float:right">
+                    <i class="fas fa-arrow-left"></i> Voltar</button>                
+            </div>
+            <div *ngIf="!modeloTestado" class="text-right col-md-12" style="margin-bottom: 20px;">
+                    <button type="button" (click)="voltar()" class="btn btn-default" style="float:right">
+                        <i class="fas fa-arrow-left"></i> Voltar</button>                    
+                    <button  type="button" (click)="testaModelo()" class="btn btn-success" style="float:right">
+                                Realizar Teste <i class="fas fa-check-circle"></i> </button>
+            </div>
+        </div>
+    </div>
+</div>

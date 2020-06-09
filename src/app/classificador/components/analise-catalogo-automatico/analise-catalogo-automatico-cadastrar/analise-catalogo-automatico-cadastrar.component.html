@@ -1,0 +1,49 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+          <h4 class="mb-0 text-white"> Análise de Catálogo Automático - Cadastrar </h4>
+        </div>
+      <div class="card-body">
+        <h4 style="color: #3E5569;">Selecionados</h4>
+        <div class="align-items-end justify-content-end col-md-12" style="border: 1px solid #CCCCCC; padding-left: 0; padding-right: 0;">
+          <p-table [value]="nodes" [scrollable]="true" scrollHeight="160px" styleClass="table table-striped">
+            <ng-template pTemplate="header">
+              <tr>
+                <th> </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-node>
+              <tr style="margin-left: 10px;">
+                <td>{{node.label}}</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+        <div class="row p-t-20 col-md-12" style="padding-left: 0; padding-right: 0; margin-left: 0; margin-right: 0;">
+          <div class="row align-items-end col-md-12" style="margin-bottom: 30px; padding-left: 0; padding-right: 0; margin-left: 0; margin-right: 0;">
+            <div class="col-xs-12 col-md-4 form-group space-between" style="margin-bottom: 0; padding-left: 0;">
+              <label>Segmento:</label>
+              <ng-select class="custom" notFoundText="Nenhum segmento encontrado">
+              </ng-select>
+            </div>
+            <div class="col-xs-12 col-md-4 form-group space-between" style="margin-bottom: 0;">
+              <label>Grupo:</label>
+              <ng-select class="custom" notFoundText="Nenhum grupo encontrado">
+              </ng-select>
+            </div>
+            <div class="col-xs-12 col-md-4 form-group space-between" style="margin-bottom: 0; padding-right: 0;">
+              <label>Subgrupo:</label>
+              <ng-select class="custom" notFoundText="Nenhum subgrupo encontrado">
+              </ng-select>
+            </div>
+          </div>
+        </div>
+        <div class="text-right">
+          <button type="button" (click)="voltar()" class="btn" style="float:right;margin-right: 20px;">Voltar</button>
+          <button type="button" class="btn btn-success" (click)="salvar()" style="float:right;margin-right: 20px;">Salvar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

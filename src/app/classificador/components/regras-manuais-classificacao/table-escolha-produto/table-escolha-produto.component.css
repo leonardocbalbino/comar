@@ -1,0 +1,83 @@
+tr{
+  justify-items: center;
+}
+
+.inputSearch{
+  border-color: #ccc;
+}
+
+.selected-row{
+  background-color: #95BCF2 !important;
+}
+
+.arrow-white{
+  color: white;
+  margin: 0;
+}
+
+.arrow-black{
+  color: black;
+  margin: 0;
+}
+
+.unselected{
+  background-color: white;
+}
+
+.expTable th{
+  background-color: #F2F2F2;
+}
+
+.expTable tr{
+  background-color: #FFFFFF;
+}
+
+:host >>> .ui-radiobutton{
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0;
+  width: 20px;
+  height: 20px;
+}
+
+:host >>> .ícone-radiobutton-ui{
+  border-color: #007ad9;
+  background-color: #007ad9;
+  color: #ffffff;
+}
+
+:host >>> .ui-radiobutton .ui-radiobutton-box.ui-state-active {
+  background-color: #017ABD;
+  color: transparent;
+}
+
+:host >>> .ui-radiobutton .ui-radiobutton-box.ui-state-active .ui-radiobutton-icon{
+  background-color: #fff;
+}
+
+:host >>> .ui-radiobutton .ui-radiobutton-box{
+  border: 1px solid #a6a6a6;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  position: relative;
+  border-radius: 50%;
+}
+
+:host >>> .ui-radiobutton .ui-radiobutton-box .ui-radiobutton-icon{
+  background: transparent;
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -5px;
+  margin-top: -5px;
+  transition: background-color 0.2s;
+  border-radius: 50%;
+}
+
+:host >>> .ui-radiobutton-label{
+  margin: 0 0 0 0.5em;
+}

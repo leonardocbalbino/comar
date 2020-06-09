@@ -1,0 +1,77 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+        <h4 class="mb-0 text-white">Transformação de Dados</h4>
+      </div>
+      <div class="card-body">
+        <form class="form-horizontal m-t-20" id="transformacaoForm" [formGroup]="transformacaoForm" novalidate>
+          <div class="row">
+            <div class="col-md-5">
+              <label>Grupo de Mineração</label>
+              <div class="form-group">
+                <input class="form-control" [(ngModel)]="atributoGrupo?.grupo.grupoNome"
+                  [ngModelOptions]="{standalone: true}" readonly>
+              </div>
+            </div>
+            <div class="col-md-5">
+              <label>Atributo</label>
+              <div class="form-group">
+                <input class="form-control" [(ngModel)]="atributoGrupo?.atributo.atributoNome"
+                  [ngModelOptions]="{standalone: true}" readonly>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <label>Expressão de Transformação</label>
+              <div class="form-group">
+                <input class="form-control">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <label>Expressão de Reversão</label>
+              <div class="form-group">
+                <input class="form-control">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="custom-control custom-checkbox mr-sm-2 m-b-15">
+                <input type="checkbox" class="custom-control-input" id="checkbox0" value="check">
+                <label class="custom-control-label" for="checkbox0">Tratar esse atributo como texto não
+                  estruturado</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <button class="btn btn-info" type="button"><i class="fas fa-search"></i> Pré-Visualizar</button>
+              </div>
+              <input type="number" class="form-control col-md-1">
+              <small id="emailHelp" class="form-text text-muted"> Registros</small>
+            </div>
+          </div>
+        </form>
+        <div class="row">
+          <div class="col-md-8">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <td>Antes</td>
+                  <td>Depois</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

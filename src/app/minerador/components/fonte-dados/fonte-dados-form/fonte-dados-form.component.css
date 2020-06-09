@@ -1,0 +1,22 @@
+:host >>> .ui-state-highlight {
+    background-color: #e5e5e5 !important;
+    font-weight: bold !important;
+}
+:host >>> .ui-tree .ui-tree-container {
+    overflow: none;
+}
+:host >>> .ng-select.disable-arrow .ng-arrow-wrapper .ng-arrow {
+    display: none;
+}
+:host >>> .ng-select.disable-clear-all .ng-clear-wrapper {
+    display: none;
+}
+:host >>> .ng-select.disable-dropdown ng-dropdown-panel {
+    display: none;
+}
+:host >>> .ui-chkbox {
+  border: 1px solid !important;
+}
+:host >>> .ui-tree {
+  width: 100%;
+}

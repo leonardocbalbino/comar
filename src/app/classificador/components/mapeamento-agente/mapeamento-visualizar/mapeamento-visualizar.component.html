@@ -1,0 +1,97 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card card-outline-info">
+            <div class="card-header">
+                <h4 class="mb-0 text-white">Mapeamento dos Atributos do Modelo/Agente de Classificação</h4>
+              </div>
+            <div class="card-body">
+                <div class="row p-t-20">
+                    <div class="col-md-3">
+                        <label>Nome</label>
+                        <div class=" form-group" >
+                            <input class="form-control"
+                            [disabled]="true" value="{{modeloAtual ? modeloAtual.modeloNome : ''}}">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Grupo de Mineração</label>
+                        <div class=" form-group" >
+                            <input class="form-control"
+                            [disabled]="true" value="{{modeloAtual ? modeloAtual.grupoNome : ''}}">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Algoritmo</label>
+                        <div class=" form-group" >
+                            <input class="form-control"
+                            [disabled]="true" value="{{modeloAtual ? modeloAtual.algoritmoNome : ''}}">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Função de Mineração</label>
+                        <div class=" form-group" >
+                            <input class="form-control"
+                            [disabled]="true" value="{{modeloAtual ? modeloAtual.funcaoMineracaoNome : ''}}">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <label>% Acurácia</label>
+                        <div class=" form-group" >
+                            <input class="form-control"
+                            [disabled]="true" value="{{modeloAtual ? modeloAtual.confiancaPreditiva : ''}}">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                      <label>Data de criação</label>
+                      <div class=" form-group" >
+                          <input class="form-control"
+                          [disabled]="true" value="{{modeloAtual.dataCriacao | date: 'dd/MM/yyyy'}}">
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                        <label>Data Inicio Vigência:</label>
+                        <div>
+                          <p-calendar
+                          class="date" [ngModel]="modeloAtual?.dataInicioVigencia  | date:'dd/MM/yyyy'"
+                          dateFormat="dd/mm/yy" placeholder="dd/mm/aaaa" appendTo="body"
+                          [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030"
+                          [locale]="pt" [readonlyInput]="true" [showIcon]="true" (onSelect)="changeDate1($event)"
+                          [maxDate]="dt1"></p-calendar>
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <label>Data Fim Vigência:</label>
+                        <div>
+                          <p-calendar
+                          class="date" [ngModel]="modeloAtual?.dataFimVigencia  | date:'dd/MM/yyyy'"
+                          dateFormat="dd/mm/yy" placeholder="dd/mm/aaaa" appendTo="body"
+                          [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030"
+                          [locale]="pt" [readonlyInput]="true" [showIcon]="true" (onSelect)="changeDate2($event)"
+                          [minDate]="dt2"></p-calendar>
+                        </div>
+                      </div>
+                      <div class="col-xs-12 col-sm-12 col-md-2">
+                        <label>Alvo Relação Catálogo</label>
+                        <ng-select class="custom" notFoundText="Nenhum alvo relação encontrada"
+                        [items]="coluna$ | async" bindLabel="colunaNome" [(ngModel)]="colunaAlvo">
+                        </ng-select>
+                      </div>
+                </div>
+            </div>
+            <div class="card-body">
+               <app-table-mapeamento [modeloId]="modeloAtual?.modeloId" 
+               (enviarAlvoConfig)="atribuirAlvoConfigAgente($event)" 
+               (enviarAtributos)="setAtributosToSave($event)" [colunas]="coluna">
+              </app-table-mapeamento>
+            </div>
+            <div class="card-body">
+                <div class="text-right">
+                    <button (click)="mapear()" type="button" class="btn btn-success" style="float:right">
+                        <i></i> Aplicar Mapeamento</button>
+                    <button type="button" (click)="voltar()" class="btn btn-default" style="float:right">
+                        <i class="fas fa-arrow-left"></i> Voltar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

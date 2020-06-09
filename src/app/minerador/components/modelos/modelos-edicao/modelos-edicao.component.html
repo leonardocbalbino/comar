@@ -1,0 +1,278 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card card-outline-info">
+            <div class="card-header">
+                <h4 class="mb-0 text-white">Dados Gerais</h4>
+            </div>
+            <div class="card-body">
+                <div class="row p-t-20">
+                    <div class="col-md-3">
+                        <label>Nome do Modelo</label>
+                        <div class="form-group">
+                            <input class="form-control" (ngModelChange)="verificaNumber($event)" [(ngModel)]="modeloNome">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Função de Mineração</label>
+                        <div class="form-group">
+                            <ng-select [items]="mineracao$ | async" bindLabel="funcaoMineracaoAlias" notFoundText="Nenhuma função encontrada" (change)="onChangeAlgoritmo()"
+                                [(ngModel)]="funcaoMineracaoModel">
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Algoritmo</label>
+                        <div class="form-group">
+                            <ng-select [items]="funcaoAlgoritmo$ | async" bindLabel="algoritmo.algoritmoAlias" notFoundText="Nenhum algoritmo encontrada"
+                                (change)="onChangeParametros()" [(ngModel)]="funcaoAlgoritmo">
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Grupo de treino</label>
+                        <div class="form-group">
+                            <ng-select [items]="grupo$" bindLabel="grupoNome" notFoundText="Nenhum grupo encontrado" (change)="onChangeGrupo()"
+                                [(ngModel)]="grupoSel">
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Total de registros do Grupo</label>
+                        <div class="form-group">
+                            <input [disabled]="true" class="form-control" [(ngModel)]="grupoTotalRegistro">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <label>% dados de grupo</label>
+                        <div class="form-group">
+                            <ng-select [items]="listaPercentual" bindLabel="descricao" (change)="onChangePercentGrupo()" [(ngModel)]="modeloPercentGrupo">
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <label>% dados de treino</label>
+                        <div class="form-group">
+                            <ng-select *ngIf="!clusterizacao" [items]="listaPercentual" bindLabel="descricao" (change)="onChangePercentTreino()" [(ngModel)]="modeloPercentTreino">
+                            </ng-select>
+                            <ng-select *ngIf="clusterizacao" [disabled]="true" [items]="listaPercentual" bindLabel="descricao" [(ngModel)]="modeloPercentTreino">
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="card-body">
+                    <h4 class="card-title">Atributos</h4>
+                    <ngb-alert *ngIf="clusterizacao" [dismissible]="false" type="danger">
+                        <strong>Atenção!</strong> A função de mineração escolhida não permite seleção de atributo-alvo e nem segmentação
+                        de dados para treino do modelo
+                    </ngb-alert>
+                    <div class="row p-t-20" style="align-items: center;">
+                        <div class="col-md-3">
+                            <label>Disponíveis</label>
+                            <div class="form-group border border-dark rounded mb-0 ex1" style="height: 200px;">
+                                <div *ngFor='let atributo of listaGrupoAtributos' style="margin-top: 10px;margin-left: 10px;">
+                                    <div class="row">
+                                        <div style="margin-left: 10px;">
+                                            <a href="javascript:">
+                                                <input type="checkbox"  (click)="selecionaModelo(atributo.atributo)">
+                                            </a>
+                                        </div>
+                                        <div style="margin-left: 10px;">
+                                            {{atributo.atributo.atributoAlias}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1.5" style="margin-top: 50px;">
+                            <div class="form-group">
+                                <button type="button" style="width: 120px;" (click)="onchangePreditivo()" class="btn btn-success">
+                                    <i class="fas fa-plus"></i> Preditivo</button>
+                            </div>
+                            <div class="form-group">
+                                <button type="button" style="width: 120px;" (click)="onChangeChave()" class="btn btn-success">
+                                    <i class="fas fa-plus"></i> Chave</button>
+                            </div>
+                            <div *ngIf="!clusterizacao" class="form-group">
+                                <button type="button" style="width: 120px;" (click)="onChangeAlvo()" class="btn btn-success">
+                                    <i class="fas fa-plus"></i> Alvo</button>
+                            </div>
+                            <div *ngIf="clusterizacao" class="form-group">
+                                <button type="button" style="width: 120px;" class="btn btn-danger">
+                                    <i class="fas fa-plus"></i> Alvo</button>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Preditivos</label>
+                            <div class="form-group border border-dark rounded mb-0 ex1" style="height: 200px;">
+                                <div *ngFor='let atributo of listaPreditivos' style="margin-top: 10px;margin-left: 10px;">
+                                    <div class="row">
+                                        <div style="margin-left: 10px;">
+                                            {{atributo.atributo.atributoAlias}}
+                                        </div>
+                                        <div style="margin-left: 10px;">
+                                            <i class="fas fa-trash" style="color: red;" (click)="removePreditivo(atributo.atributo.atributoId)"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label>Chave</label>
+                            <div class="form-group border border-dark rounded mb-0" style="height: 200px;">
+                                <div style="margin-top: 20px;margin-left: 10px;" [(ngModel)]="atributoChaveNome">
+                                    {{atributoChaveNome}}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label>Alvo</label>
+                            <div class="form-group border border-dark rounded mb-0" style="height: 200px;">
+                                <div style="margin-top: 20px;margin-left: 10px;" [(ngModel)]="atributoAlvoNome">
+                                    {{atributoAlvoNome}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <h4 class="card-title">Customizações</h4>
+                <ngb-alert *ngIf="parametroObrigatorio" [dismissible]="false" type="danger">
+                    <strong>Atenção!</strong> Existem parâmetros obrigatórios a serem cadastrados
+                </ngb-alert>
+                <div class="row p-t-20" style="align-items: center;">
+                    <div class="col-md-3">
+                        <label>Parâmetros</label>
+                        <div class="form-group">
+                           <!-- <select class="form-control" [(ngModel)]="listaTipoParametro" (change)="onChangeTipoParametro()">
+                                <option value=""></option>
+                                <option *ngFor="let parametro of listaParametrosModelo">{{parametro.parametroAlias}}</option>
+                            </select>-->
+                            <ng-select 
+                                [items]="listaParametrosModeloCompleto" 
+                                bindLabel="parametroAlias" 
+                                (change)="onChangeTipoParametro($event)" 
+                                [(ngModel)]="listaTipoParametro">
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div *ngIf="tipoParametro === 'ATRIBUTO'" class="col-md-8 row">
+                        <div class="col-md-4">
+                            <label>Atributos</label>
+                            <div class="form-group">
+                                <ng-select [items]="atributos$ | async" bindLabel="atributo.atributoAlias" notFoundText="Nenhum atributo encontrado" [(ngModel)]="atributoParametro">
+                                </ng-select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3" style="margin-top: 25px;">
+                            <button type="button" class="btn btn-success" (click)="cadastraParametro()">
+                                Adicionar</button>
+                        </div>
+                    </div>
+                    <div *ngIf="tipoParametro === 'LISTA_OPCOES'" class="col-md-8 row">
+                        <div class="col-md-4">
+                            <label>Opções de Parâmetro</label>
+                            <div class="form-group">
+                                <ng-select [items]="opcaoParametroList | async" bindLabel="opcaoParametroAlias" notFoundText="Nenhum atributo encontrado"
+                                    [(ngModel)]="opcaoParametro">
+                                </ng-select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3" style="margin-top: 25px;">
+                            <button type="button" class="btn btn-success" (click)="cadastraParametro()">
+                                Adicionar</button>
+                        </div>
+                    </div>
+                    <div *ngIf="tipoParametro === 'CONSTANTE'" class="col-md-8 row">
+                        <div class="col-md-2">
+                            <label>Valor</label>
+                            <div class="form-group">
+                                <input [disabled]="false" class="form-control" [(ngModel)]="valorParametro">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Dica</label>
+                            <div class="form-group" style="margin-top: 5px;">
+                                <p>Valores entre {{tipoMinimoParametro}} e {{tipoMaximoParametro}} </p>
+                            </div>
+                        </div>
+                        <div class="col-md-3" style="margin-top: 25px;">
+                            <button type="button" class="btn btn-success" (click)="cadastraParametro()">
+                                Adicionar</button>
+                        </div>
+                    </div>
+
+                </div>
+                <div style="margin-top: 10px;">
+                    <p-table #dt [value]="listaParametros" [autoLayout]="true" styleClass="table table-striped" [sortOrder]="-1">
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th scope="col">Parâmetro</th>
+                                <th scope="col">Valor</th>
+                            </tr>
+
+                        </ng-template>
+                        <ng-template pTemplate="body" let-listaParametros>
+                            <tr>
+                                <td>{{listaParametros.parametroAlias}}</td>
+                                <td>{{listaParametros.parametroModeloValor}}</td>
+                                <td>
+                                    <div style="display: block; width: 70px;">
+                                        <button title="Excluir Registro" type="button" (click)="removeParametro(listaParametros)" class="btn btn-danger btn-rounded btn-sm">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <td [attr.colspan]="colunas.length">
+                                Nenhum registro encontrado
+                            </td>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+            <div class="row col-md-12" style="margin-top: 50px;">
+                <div class="col-md-6">
+                    <!-- <fieldset *ngIf="edicao && !historicoTeste" class="checkbox">
+                        <label *ngIf="publicacaoSelEdit === 'SIM'">
+                            <input type="checkbox" checked (change)="publicacao($event)"> Modelo publicado
+                        </label>
+                        <label *ngIf="publicacaoSelEdit === 'NÃO'">
+                            <input type="checkbox" (change)="publicacao($event)"> Modelo publicado
+                        </label>
+                    </fieldset> -->
+                    <fieldset *ngIf="historicoTeste" class="checkbox">
+                        <label *ngIf="publicacaoSelEdit === 'SIM'">
+                            <button type="button" (click)="atualizaPublicacao(1)" class="btn btn-danger" style="float:right">
+                                <i class="fas fa-times-circle"></i> Despulbicar</button>
+                        </label>
+                        <label *ngIf="publicacaoSelEdit === 'NÃO'">
+                            <button type="button" (click)="atualizaPublicacao(0)" class="btn btn-success" style="float:right">
+                                <i class="fas fa-check-circle"></i> Publicar</button>
+                        </label>
+                    </fieldset>
+                    <!-- <fieldset *ngIf="!edicao" class="checkbox">
+                        <label>
+                            <input type="checkbox" [(ngModel)]="publicacaoSel" (change)="publicacao($event)"> Modelo
+                            publicado
+                        </label>
+                    </fieldset> -->
+                </div>
+                <div class="text-right col-md-6" style="margin-bottom: 20px;">
+                    <button type="button" (click)="voltar()" class="btn btn-danger" style="float:right">
+                        <i class="fas fa-trash"></i> Descartar</button>
+                    <button type="button" (click)="cadastraModelo()" class="btn btn-success" style="float:right">
+                        <i class="fas fa-check-circle"></i> Salvar</button>
+                    <!-- <button *ngIf="!edicao" type="button" (click)="voltar()" class="btn btn-default"
+                        style="float:right">
+                        <i class="fas fa-arrow-left"></i> Voltar</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,97 @@
+
+.showInput{
+  height: 26px;
+  position: absolute;
+  display: block;
+  width: calc(100% - 75px);
+  color: #3E5569;
+}
+
+.showBtn{
+  display: block;
+}
+
+.hiddenBtn{
+  display: none;
+}
+
+.hiddenInput{
+  height: 26px;
+  position: absolute;
+  display: none;
+}
+
+.btnFocused:focus{
+  background-color: #007ad9;
+  color: #ffffff;
+  border-radius: 3px;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+.btnFocused:active{
+  background-color: #007ad9;
+  color: #ffffff;
+  border-radius: 3px;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+.btnFocused{
+  background-color: transparent;
+  color: #3E5569;
+  padding-left: 2px;
+  padding-right: 2px;
+  height: 24px;
+  border: none;
+  width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 100%;
+  text-align: left;
+}
+
+.context-menu-conteiner{
+  display: none;
+  padding: 0;
+  background-color: #ffffff;
+  border: 1px solid #c8c8c8;
+}
+
+.context-menu-ul{
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 40px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+::ng-deep .ui-contextmenu{
+  background-color: white;
+}
+
+::ng-deep .ui-contextmenu a:hover{
+  background-color: #bbb;
+  border-radius: 4px;
+  color: white;
+}
+
+::ng-deep .ui-tree .ui-treenode-selectable.ui-treenode-content{
+  cursor: initial;
+  width: 100%;
+  display: flex;
+  height: 26px;
+}
+
+::ng-deep .ui-treenode-label{
+  width: calc(100% - 30px);
+}
+
+::ng-deep .ui-treenode-icon, ::ng-deep .ui-tree-toggler{
+  align-self: center;
+  width: min-content;
+}

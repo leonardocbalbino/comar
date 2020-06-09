@@ -1,0 +1,76 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card card-outline-info">
+            <div class="card-header">
+                <h4 class="mb-0 text-white"> Seleção de Modelos de Catálogo Automático - Visualizar </h4>
+              </div>
+            <div class="card-body">
+                <div class="row p-t-20">
+                    <div class="col-md-3">
+                        <label>Nome:</label>
+                        <div class=" form-group" >
+                            <input class="form-control" class="produtoCat" >
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Grupo de Mineração:</label>
+                        <div class=" form-group" >
+                            <input class="form-control" class="produtoCat" >
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Atributo-Chave:</label>
+                        <div class=" form-group" >
+                            <input class="form-control" class="produtoCat" >
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Atributo-Alvo: </label>
+                        <div class=" form-group" >
+                            <input class="form-control" class="produtoCat" >
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Função de Mineração: </label>
+                        <div class=" form-group" >
+                            <input class="form-control" class="produtoCat" >
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Algoritmo: </label>
+                        <div class=" form-group" >
+                            <input class="form-control" class="produtoCat" >
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>Dados de Treino: </label>
+                        <div class=" form-group" >
+                            <input class="form-control" class="produtoCat" >
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body" style="padding-top: 0;">
+                <h4 class="card-title overlay-text"
+                  style="margin: 0; color: #3E5569; background-color: white; margin-left: 20px;">Customizações</h4>
+                <div class="card-body contorno overlay" style="margin-bottom: 30px; padding-bottom: 0;">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="card" style="margin: 0;">
+                        <div class="card-body" style="padding: 0.25rem;">
+                           <app-data-table-classificador [hasRadio]="0" [colunas]="colunasAtributosRegra" 
+                           [activeIcons]=[]>
+                          </app-data-table-classificador> 
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+             </div>
+             <div class="text-right">
+                <button type="button" (click)="voltar()" class="btn btn-default" style="float:right;">
+                 <i class="fas fa-arrow-left"></i> Voltar</button>
+              </div>
+        </div>
+    </div>
+</div>

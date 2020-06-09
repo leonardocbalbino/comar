@@ -1,0 +1,38 @@
+tr{
+  justify-items: center;
+}
+
+.selected-row{
+  background-color: #95BCF2 !important;
+}
+
+.arrow-white{
+  color: white;
+  margin: 0;
+}
+
+.arrow-black{
+  color: black;
+  margin: 0;
+}
+
+.unselected{
+  background-color: white;
+}
+
+.expTable th{
+  background-color: #F2F2F2;
+}
+
+.expTable tr{
+  background-color: #FFFFFF;
+}
+
+.expTable ::ng-deep.ui-paginator-bottom {
+  background-color: #FFFFFF;
+}
+
+.chk ::ng-deep.ui-chkbox-box{
+  border: 1px solid #000;
+  border-radius: 0px;
+}

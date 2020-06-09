@@ -1,0 +1,45 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+        <h4 class="mb-0 text-white"> Seleção de Modelos de Classificação Automática </h4>
+      </div>
+      <form class="col-12 row" [formGroup]="consultaForm" novalidate style="margin: 0; margin-top: 20px;">
+        <div class="col-xs-12 col-sm-12 col-md-3 form-group d-flex flex-column justify-content-end">
+          <label>Nome do modelo:</label>
+          <input type="text" class="form-control formStyles" formControlName="modeloNome">
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-2 form-group d-flex flex-column justify-content-end">
+          <label>Função de mineração:</label>
+          <ng-select formControlName="funcaoMineracaoId" [items]="funcao$ | async" (change)="changeFuncao()" bindValue="funcaoMineracaoId" bindLabel="funcaoMineracaoAlias" class="custom" notFoundText="Nenhuma função de mineração encontrada">
+          </ng-select>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-2 form-group d-flex flex-column justify-content-end">
+          <label>Algoritmo:</label>
+          <ng-select formControlName="algoritmoId" [items]="algoritmos" [readonly]="algoritmos.length > 0 ? false : true" bindValue="algoritmo.algoritmoId" bindLabel="algoritmo.algoritmoAlias" class="custom" notFoundText="Nenhum algoritmo encontrado">
+          </ng-select>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-3 form-group d-flex flex-column justify-content-end">
+          <label>Acurácia:</label>
+          <div class="d-flex flex-row">
+            <div style="padding-left: 0; padding-right: 5px;"class="col-xs-12 col-sm-4 col-md-6">
+              <ng-select formControlName="operador" [items]="sinaisConfianca" (change)="onChangeSinais()" class="custom" notFoundText="Nenhum registro encontrado">
+              </ng-select>
+            </div>
+            <div style="padding-left: 5px; padding-right: 0;" class="col-xs-12 col-sm-8 col-md-6">
+              <ng-select formControlName="confiancaPreditiva" [readonly]="consultaForm.value.operador == null ? true : false" [items]="numeros0a100" class="custom" notFoundText="Nenhum registro encontrado">
+              </ng-select>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-2 form-group d-flex align-items-end" style="padding-left: 5px;">
+          <button class="btn btn-info col-12" (click)="localizar()" style="height: calc(1.5em + 0.75rem + 2px);  min-height: 36px;">Localizar</button>
+        </div>
+      </form>
+      <div class="card-body">
+        <app-table-selecao-modelos [consultaForm]="consultaForm" [datasLimit]="datasLimit" [colunas]="colunas" [dados]="allModelos">
+        </app-table-selecao-modelos>
+      </div>
+    </div>
+  </div>
+</div>

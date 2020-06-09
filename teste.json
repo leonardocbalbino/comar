@@ -1,0 +1,95 @@
+{
+    "modeloId": 1324,
+    "modeloNome": "MODELO14BEBIDAS CLUS2",
+    "grupo": {
+        "grupoId": 1065,
+        "grupoData": "2020-05-14",
+        "grupoNome": "GRUPO14BEBIDAS",
+        "grupoObjetivo": "Análise dos itens das notas que são bebidas.",
+        "grupoSchema": "SMARTGROUP",
+        "grupoTabela": "GRUPO14BEBIDAS",
+        "grupoVisibilidade": "PRIVADO",
+        "grupoStatusProc": "CONCLUIDO",
+        "grupoErroCriacao": null,
+        "fonte": {
+            "fonteId": 1151,
+            "fonteAlias": "FONTE08052020",
+            "fonteArquivo": null,
+            "fonteNome": "NFEPRODUTO",
+            "fonteSchema": "SMART",
+            "fonteTipo": "INTERNO",
+            "fonteStatusProc": "CONCLUIDO",
+            "fonteErroCriacao": null,
+            "fonteData": "2020-05-08T19:02:19.000+0000",
+            "fonteTotalRegistros": 32594,
+            "fonteAprendizado": true,
+            "origem": null
+        },
+        "usuario": null,
+        "grupoCondicao": "where ( CEAN2 is not null  and ID_INFNFE is not null  and XPROD is not null  and NCM like '22%' ) ",
+        "grupoTotalRegistros": 2033,
+        "porcentagemRegistrosFonte": null
+    },
+    "modeloPublicado": 1,
+    "modeloTabelaConfig": "MODELO14BEBIDAS_CLUS2config",
+    "modeloSchemaConfig": "SMART",
+    "modeloPercentGrupo": 9,
+    "modeloPercentTreino": 100,
+    "funcaoMineracao": {
+        "funcaoMineracaoId": 4,
+        "funcaoMineracaoAlias": "Clusterização",
+        "funcaoMineracaoNomeInterno": "CLUSTERING",
+        "funcaoMineracaoSeparaDados": null,
+        "funcaoMineracaoAlgoritmos": [
+            {
+                "funcaoMineracaoAlgoritmoId": 9,
+                "algoritmo": {
+                    "algoritmoId": 6,
+                    "algoritmoAlias": "Language used for extensible algorithm",
+                    "algoritmoNomeInterno": "ALGO_EXTENSIBLE_LANG",
+                    "algoritmoSupervisionado": true
+                }
+            },
+            {
+                "funcaoMineracaoAlgoritmoId": 14,
+                "algoritmo": {
+                    "algoritmoId": 8,
+                    "algoritmoAlias": "k-Means",
+                    "algoritmoNomeInterno": "ALGO_KMEANS",
+                    "algoritmoSupervisionado": false
+                }
+            },
+            {
+                "funcaoMineracaoAlgoritmoId": 17,
+                "algoritmo": {
+                    "algoritmoId": 11,
+                    "algoritmoAlias": "O-Cluster",
+                    "algoritmoNomeInterno": "ALGO_O_CLUSTER",
+                    "algoritmoSupervisionado": false
+                }
+            }
+        ],
+        "algortimosAlias": [
+            "Language used for extensible algorithm",
+            "k-Means",
+            "O-Cluster"
+        ],
+        "funcaoMineracaoSeparaDadosLabel": "NÃO"
+    },
+    "algoritmo": {
+        "algoritmoId": 11,
+        "algoritmoAlias": "O-Cluster",
+        "algoritmoNomeInterno": "ALGO_O_CLUSTER",
+        "algoritmoSupervisionado": false
+    },
+    "usuario": {
+        "usuarioId": 1,
+        "usuarioCpf": "12312312333",
+        "usuarioEmail": "teste@teste.com",
+        "usuarioLogin": "teste",
+        "usuarioMatricula": "123456",
+        "usuarioNome": "Teste da Silva Teste",
+        "usuarioSenha": "teste",
+        "usuarioBloqueado": null
+    }
+}

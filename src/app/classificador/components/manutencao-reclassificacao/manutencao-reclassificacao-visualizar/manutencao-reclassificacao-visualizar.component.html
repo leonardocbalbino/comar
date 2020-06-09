@@ -1,0 +1,69 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+          <h4 class="mb-0 text-white"> Manutenção da Reclassificação - Visualizar </h4>
+        </div>
+      <div class="card-body">
+        <div class="row p-t-20">
+          <div class="row align-items-end col-md-12" style="margin-bottom: 30px; padding-right: 0;">
+            <div class="col-xs-12 col-sm-12 col-md-4 form-group">
+              <label>CNPJ Emitente:</label>
+              <input class="form-control " readonly [value]="itemClass?.cnpjEmitente">
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-4 form-group">
+              <label>CPF/CNPJ Destinatário:</label>
+              <input class="form-control " readonly [value]="itemClass?.cnpjDestinatario">
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-2 form-group">
+              <label>Número NF-e:</label>
+              <input class="form-control " readonly [value]="itemClass?.numeroNota">
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-2 form-group">
+              <label>Data Emissão NF-e:</label>
+              <div>
+                <input class="form-control " readonly [value]="itemClass?.dataNota | date: 'dd/MM/yyyy'">
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-2 form-group">
+              <label>NCM:</label>
+              <input class="form-control " readonly [value]="itemClass?.ncm">
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-2 form-group">
+              <label>Valor Unitário:</label>
+              <input class="form-control " readonly [value]="itemClass?.valorUnitario | number">
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-2 form-group">
+              <label>Data Reclassificação:</label>
+              <div>
+                <input class="form-control " readonly [value]="itemClass?.dataReclassificacao | date: 'dd/MM/yyyy'">
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-4 form-group">
+              <label>Usuário Reclassificação:</label>
+              <input class="form-control " readonly [value]="itemClass?.usuarioReclassificacao">
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-3 form-group">
+              <label>Atributo Alvo:</label>
+              <input class="form-control " readonly [value]="itemClass?.atributoAlvo">
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-4 form-group">
+              <label>Item da NF-e:</label>
+              <input class="form-control " readonly [value]="itemClass?.itemNotaFiscal">
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-4 form-group">
+              <label>Produto Sugerido:</label>
+              <input class="form-control " readonly [value]="itemClass?.produtoSugerido">
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-4 form-group">
+              <label>Produto Associado:</label>
+              <input class="form-control " readonly [value]="itemClass?.produtoAssociado">
+            </div>
+          </div>
+        </div>
+        <div class="text-right">
+          <button type="button" (click)="voltar()" class="m-t-20 btn waves-effect waves-light btn-info" ><i class="fas fa-arrow-left"></i> Voltar</button>
+        </div>
+      </div>
+    </div>
+  </div>

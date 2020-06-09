@@ -1,0 +1,75 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+          <h4 class="mb-0 text-white"> Classificação Manual - Visualizar </h4>
+        </div>
+        <div class="card-body">
+          <div class="row p-t-20">
+            <div class="row align-items-end col-md-12" style="margin-bottom: 30px; padding-right: 0;">
+              <div class="col-xs-12 col-sm-12 col-md-3 form-group" style="margin: 0;">
+                <label>CNPJ Emitente:</label>
+                <input value="{{cnpj}}" class="form-control formStyles formRadius" readonly>
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-3 form-group" style="margin: 0;">
+                <label>CPF/CNPJ Destinatário:</label>
+                <input value="{{cnpj}}" class="form-control formStyles formRadius" readonly>
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-3 form-group" style="margin: 0;">
+                <label>Número Nf-e:</label>
+                <input value="{{nfe}}" class="form-control formStyles formRadius" readonly>
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-3">
+                <label>Data Emissão NF-e:</label>
+                <div>
+                  <p-calendar disabled="true" [(ngModel)]="date1" dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true"
+                    [locale]="pt" appendTo="body" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030"
+                    [readonlyInput]="true">
+                  </p-calendar>
+                </div>
+              </div>
+              <div class="col-md-12" style="height: 20px;" ></div>
+              <div class="col-xs-12 col-sm-12 col-md-4 form-group" style="margin: 0;">
+                <label>Produto da NF-e:</label>
+                <input value="{{produto}}" class="form-control formStyles formRadius" readonly>
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-2 form-group" style="margin: 0;">
+                <label>NCM:</label>
+                <input value="{{ncm}}" class="form-control formStyles formRadius" readonly>
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-3 form-group" style="margin: 0;">
+                <label>GTIN:</label>
+                <input value="{{ncm}}" class="form-control formStyles formRadius" readonly>
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-3 form-group" style="margin: 0;">
+                <label>Valor Unitário:</label>
+                <input value="{{valor}}" class="form-control formStyles formRadius" readonly>
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-2 form-group" style="margin: 0;">
+                <label>Precisão de Classificação:</label>
+                <input value="{{precisao}}" class="form-control formStyles formRadius" readonly>
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-2 form-group" style="margin: 0;">
+                <label>Fator Aceitação do Catálogo:</label>
+                <input value="{{fator}}" class="form-control formStyles formRadius" readonly>
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-2 form-group" style="margin: 0;">
+                <label>Desvio Padrão:</label>
+                <input value="{{chave}}" class="form-control formStyles formRadius" readonly>
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-3 form-group" style="margin: 0;">
+                <label>Atributo-Alvo:</label>
+                <input value="{{protocolo}}" class="form-control formStyles formRadius" readonly>
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-3 form-group" style="margin: 0;">
+                <label>Modelo Utilizado:</label>
+                <input value="{{protocolo}}" class="form-control formStyles formRadius" readonly>
+              </div>
+            </div>
+          </div>
+          <div class="text-right">
+            <button type="button" (click)="voltar()" class="btn btn-default" style="float:right;">Voltar</button>
+          </div>
+      </div>
+  </div>
+</div>

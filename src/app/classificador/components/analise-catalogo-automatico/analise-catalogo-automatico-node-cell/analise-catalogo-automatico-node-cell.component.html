@@ -1,0 +1,8 @@
+<div class="row" style="margin: 0;">
+  <button #btnNode (dblclick)="handleShowInput()" type="text"
+    style="margin: 0;margin-left: 4px; margin-top: 1px;" class="btnFocused"
+    [ngClass]="isHiddenInput ? 'showBtn' : 'hiddenBtn'">{{node.label}}
+  </button>
+  <input #inputNode value="{{node.label}}" maxlength="30" (blur)="renomearNode($event)" (keyup.enter)="blurInput($event)" type="text"
+    [ngClass]="isHiddenInput ? 'ui-inputtext hiddenInput' : 'ui-inputtext showInput'" style="padding: 5px;">
+</div>

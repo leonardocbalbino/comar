@@ -1,0 +1,56 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card card-outline-info">
+            <div class="card-header">
+                <h4 class="mb-0 text-white">Comparação de Modelos de Mineração</h4>
+            </div>
+            <div class="card-body">
+                <h4 class="card-title">Selecione os Testes</h4>
+                <p-table #dt [value]="modelo | paginate:{itemsPerPage: 10, currentPage:p}" [responsive]="true"
+                    [rows]="5" [autoLayout]="true" styleClass="table table-striped" [sortOrder]="-1">
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th>Modelo</th>
+                            <th>Data</th>
+                            <th>Grupo</th>
+                            <th>% de Dados</th>
+                            <th>Selecionar</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-modelo>
+                        <tr>
+                            <td>{{modelo.nome}}</td>
+                            <td>{{modelo.data | date: 'dd/MM/yyyy'}}</td>
+                            <td>{{modelo.grupo}}</td>
+                            <td>{{modelo.dados}}</td>
+                            <td>
+                                <a href="javascript:" placement="top" ngbTooltip="Selecionar"
+                                    (click)="selecionahistorico(modelo)"><input type="checkbox"></a>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td [attr.colspan]="modelo.length">
+                                Nenhum registro encontrado
+                            </td>
+                        </tr>
+                    </ng-template>
+
+                </p-table>
+                <div style="text-align: center;">
+                    <pagination-controls directionLinks="true" responsive="true" (pageChange)="p=$event"
+                        previousLabel="Anterior" nextLabel="Próximo">
+                    </pagination-controls>
+                </div>
+
+
+                <button type="button" (click)="voltar()" class="btn btn-default" style="float:right">
+                    <i class="fas fa-arrow-left"></i> Voltar</button>
+                <button type="button" (click)="enviaComparacao()" class="btn btn-success" style="float:right">
+                    <i class="fas fa-check-circle"></i> Concluir</button>
+                <div class="ui-helper-clearfix" style="text-align: left"></div>
+            </div>
+        </div>
+    </div>
+</div>

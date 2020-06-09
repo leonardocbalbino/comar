@@ -1,0 +1,44 @@
+<p-table #dt [value]="dados?.content | paginate:{itemsPerPage: 10, currentPage:page, totalItems: dados?.totalElements}" [rows]="rowTable" styleClass="table table-striped" [responsive]="true" [autoLayout]="true">
+  <ng-template pTemplate="header" let-columns let-obj>
+    <tr>
+      <th *ngFor="let col of colunas" style="border-bottom: none;">
+        {{col.cabecalho}}
+      </th>
+
+      <th style="border-bottom: none;">
+        Ações
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowIndex="rowIndex" let-obj let-columns="colunas">
+    <tr>
+      <td *ngFor="let col of colunas">
+        <p *ngIf="col.campo !== 'dataInicioVigencia' && col.campo !== 'dataFimVigencia'">
+          {{(col.date ? (namespace(obj, col.campo, col.padrao) | date: 'dd/MM/yyyy') : namespace(obj, col.campo, col.padrao))}}
+        </p>
+        <p-calendar [ngModel]="dados?.content[rowIndex]?.dataInicioVigencia | date: 'dd/MM/yyyy'" [maxDate]="datasLimit[rowIndex]?.date1" (onSelect)="handleChangeDate1($event, obj, rowIndex)"  *ngIf="col.campo === 'dataInicioVigencia'" class="date" dateFormat="dd/mm/yy" placeholder="dd/mm/aaaa" appendTo="body" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" [locale]="pt" [readonlyInput]="true">
+        </p-calendar>
+        <p-calendar [ngModel]="dados?.content[rowIndex]?.dataFimVigencia | date: 'dd/MM/yyyy'" [minDate]="datasLimit[rowIndex]?.date2" (onSelect)="handleChangeDate2($event, obj, rowIndex)" *ngIf="col.campo === 'dataFimVigencia'" class="date" dateFormat="dd/mm/yy" placeholder="dd/mm/aaaa" appendTo="body" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" [locale]="pt" [readonlyInput]="true">
+        </p-calendar>
+      </td>
+      <td style="display: inline-flex;">
+        <button (click)="visualizarModelo(obj)" placement="left" ngbTooltip="Visualizar" type="button" class="btn btn-info btn-rounded btn-sm"><i class="fas fa-search"></i></button>
+        <button *ngIf="obj.modelosAutoUtilizacao == 1" (click)="removerModelo(obj, rowIndex)" placement="left" ngbTooltip="Remover Seleção" type="button" class="btn btn-danger btn-rounded btn-sm"><i class="ti-close"></i></button>
+        <button *ngIf="obj.modelosAutoUtilizacao == 0" (click)="aplicarModelo(obj, rowIndex)" placement="left" ngbTooltip="Aplicar Seleção" type="button" class="btn btn-success btn-rounded btn-sm"><i class="ti-check-box"></i></button>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td [attr.colspan]="colunas.length+2" style="text-align: center;">
+        Nenhum registro encontrado
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+<div class="row justify-content-md-center">
+  <pagination-controls directionLinks="true" responsive="true"
+  (pageChange)="pageChanged($event)" (pageBoundsCorrection)="pageChanged($event)"
+  previousLabel="Anterior" nextLabel="Próximo">
+  </pagination-controls>
+</div>

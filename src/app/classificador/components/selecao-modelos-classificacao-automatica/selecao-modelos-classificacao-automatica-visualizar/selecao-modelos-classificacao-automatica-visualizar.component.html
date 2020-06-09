@@ -1,0 +1,78 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+        <h4 class="mb-0 text-white"> Seleção de Modelos de Classificação Automática - Visualizar </h4>
+      </div>
+      <div class="card-body" style="padding-bottom: 0; margin-bottom: 20px;">
+        <div class="row align-items-end">
+          <div class="col-xs-12 col-md-3 form-group space-between" style="margin-bottom: 0;">
+            <label>Nome:</label>
+            <input class="form-control formStyles" readonly value="{{dados?.modeloNome}}">
+          </div>
+          <div class="col-xs-12 col-md-3 form-group space-between" style="margin-bottom: 0;">
+            <label>Grupo de Mineração:</label>
+            <input class="form-control formStyles" readonly value="{{dados?.grupoNome}}">
+          </div>
+          <div class="col-xs-12 col-md-3 form-group space-between" style="margin-bottom: 0;">
+            <label>Atributo-Chave:</label>
+            <input class="form-control formStyles" readonly value="{{atributoChave?.atributo?.atributoAlias}}">
+          </div>
+          <div class="col-xs-12 col-md-3 form-group space-between" style="margin-bottom: 0;">
+            <label>Atributo-Alvo:</label>
+            <input class="form-control formStyles" readonly value="{{atributoAlvo?.atributo?.atributoAlias}}">
+          </div>
+          <div class="col-xs-12 col-md-3 form-group space-between" style="margin-bottom: 0;">
+            <label>Função de Mineração:</label>
+            <input class="form-control formStyles" readonly value="{{dados?.funcaoMineracaoNome}}">
+          </div>
+          <div class="col-xs-12 col-md-3 form-group space-between" style="margin-bottom: 0;">
+            <label>Algoritmo:</label>
+            <input class="form-control formStyles" readonly value="{{dados?.algoritmoNome}}">
+          </div>
+          <div class="col-xs-12 col-md-3 form-group space-between" style="margin-bottom: 0;">
+            <label>% de Dados do Grupo:</label>
+            <input class="form-control formStyles" readonly value="{{dados?.modeloPercentGrupo == null ? '' : dados?.modeloPercentGrupo + '%'}}">
+          </div>
+          <div class="col-xs-12 col-md-3 form-group space-between" style="margin-bottom: 0;">
+            <label>% Dados de Treino:</label>
+            <input class="form-control formStyles" readonly value="{{dados?.modeloPercentTreino == null ? '' : dados?.modeloPercentTreino + '%'}}">
+          </div>
+          <div class="col-xs-12 col-md-3 form-group space-between" style="margin-bottom: 0;">
+            <label>Data de Inicio de Vigência:</label>
+            <input class="form-control formStyles" readonly value="{{dados?.dataInicioVigencia | date: 'dd/MM/yyyy'}}">
+          </div>
+          <div class="col-xs-12 col-md-3 form-group space-between" style="margin-bottom: 0;">
+            <label>Data de Fim de Vigência:</label>
+            <input class="form-control formStyles" readonly value="{{dados?.dataFimVigencia | date: 'dd/MM/yyyy'}}">
+          </div>
+          <div class="col-xs-12 col-md-3 form-group space-between" style="margin-bottom: 0;">
+            <label>% Confiança Preditiva:</label>
+            <input class="form-control formStyles" readonly value="{{dados?.confiancaPreditiva == null ? '' : dados?.confiancaPreditiva + '%'}}">
+          </div>
+        </div>
+      </div>
+      <div class="card-body" style="padding-top: 0;">
+        <h4 class="card-title overlay-text"
+          style="margin: 0; color: #3E5569; background-color: white; margin-left: 20px;">Customizações</h4>
+        <div class="card-body contorno overlay" style="margin-bottom: 30px; padding-bottom: 0;">
+          <div class="row">
+            <div class="col-12">
+              <div class="card" style="margin: 0;">
+                <div class="card-body" style="padding: 0.25rem;">
+                  <app-data-table-classificador [hasRadio]="'0'" [colunas]="colunasAtributosRegra"
+                    [activeIcons]="[]" [dados]="(parametros$ | async)">
+                  </app-data-table-classificador>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between">
+          <button type="button" (click)="voltar()" class="btn btn-default" style="float:right;">Voltar</button>
+          <button type="button" (click)="mapear()" class="btn btn-success" style="float:right;">Mapear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

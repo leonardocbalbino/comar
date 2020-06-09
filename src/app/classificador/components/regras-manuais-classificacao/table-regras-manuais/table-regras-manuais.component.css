@@ -1,0 +1,38 @@
+tr{
+  justify-items: center;
+}
+
+.inputSearch{
+  border-color: #ccc;
+}
+
+.selected-row{
+  background-color: #95BCF2 !important;
+}
+
+.arrow-white{
+  color: white;
+  margin: 0;
+}
+
+.arrow-black{
+  color: black;
+  margin: 0;
+}
+
+.unselected{
+  background-color: white;
+}
+
+.expTable ::ng-deep.table-striped thead tr{
+  background-color: #fff;
+}
+
+.expTable ::ng-deep.table-striped tbody tr:nth-of-type(odd){
+  background-color: #F2F2F2 !important;
+}
+
+.chk ::ng-deep.ui-chkbox-box{
+  border: 1px solid #000;
+  border-radius: 0px;
+}

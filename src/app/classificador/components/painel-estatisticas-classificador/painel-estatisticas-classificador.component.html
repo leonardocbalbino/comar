@@ -1,0 +1,60 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card card-outline-info">
+            <div class="card-header">
+                <h4 class="mb-0 text-white">Painel Estatístico</h4>
+              </div>
+            <div class="card-body">
+                <div class="row p-t-20">
+
+                    <div class="col-md-6">
+                        <label>Classificação por Segmento</label>
+                        <div class="form-group">
+                              <p-chart type="doughnut" [data]="dataPie"></p-chart>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label>Taxa de Acerto (%)</label>
+                        <div class="form-group">
+                            <p-chart type="bar" [data]="dataBarra"></p-chart>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label>Top 10 - Reclassificação Manual </label>
+                        <div class="form-group">
+                              <p-chart type="doughnut" [data]="dataPie2"></p-chart>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label>Evolução da Classificação</label>
+                        <div class="form-group">
+                            <p-chart type="line" [data]="dataLinha"></p-chart>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label>Top 10 - Classificação Automática</label>
+                        <div class="form-group">
+                            <app-data-table-classificador
+                            [colunas]="colunas"
+                            [hasRadio]="'0'"
+                            [activeIcons]="[]">
+                            </app-data-table-classificador>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="text-right">
+                    <button type="button"  class="btn btn-default" style="float:right">
+                        <i class="fas fa-arrow-left"></i> Voltar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,51 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card card-outline-info">
+            <div class="card-header">
+                <h4 class="mb-0 text-white"> Importação de Itens do Catálogo </h4>
+              </div>
+            <div class="card-body">
+                <div class="row p-t-20">
+                    <div class="col-md-6">
+                        <label>Produto do Catálogo</label>
+                        <div class=" form-group" >
+                            <input class="form-control" class="produtoCat" placeholder="Localizar..." >
+                        </div>
+                    </div> 
+                    
+                    <div class="col-md-6">
+                        <label>Catálogo .csv</label>
+                        <div class="form-group">
+                             <input type="file" name="file" (change)="onFileChange($event)" accept=".csv"/>  
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-12">
+                            <button style="float: right;" type="button"  class="btn btn-info">
+                             Pré-visualização
+                            </button>
+                    </div> -->
+                </div>
+            </div>
+            <div class="card-body">
+                <div>
+                        <app-data-table-classificador
+                        [colunas]="colunas"
+                        [hasRadio]="'0'"
+                        [activeIcons]="[{
+                            name: 'Excluir',
+                            className: 'ti-trash text-danger m-r-10',
+                            howFunction: '0',
+                            rota: ''
+                          }]">
+                        </app-data-table-classificador>
+                </div>
+                <div class="text-right">
+                    <button type="button"  class="btn btn-success" style="float:right">
+                        <i class="fas fa-save"></i> Salvar</button>
+                    <button type="button" (click)="voltar()" class="btn btn-default" style="float:right">
+                        <i class="fas fa-arrow-left"></i>Voltar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+.contorno{
+  border: 1px solid #CCCCCC;
+  padding: 15px;
+  padding-bottom: -10px;
+  border-radius: 0px;
+}
+
+.overlay{
+  margin-top: -12px;
+}
+
+.overlay-text{
+  z-index: 1;
+  width: fit-content;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+.formStyles{
+  border-color: #ccc;
+}
+
+.space-between{
+  margin-top: 10px;
+}
+
+:host >>> .table{
+  margin-bottom: 0;
+}

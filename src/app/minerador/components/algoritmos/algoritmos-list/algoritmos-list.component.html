@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+        <h4 class="mb-0 text-white">Algoritmos</h4>
+      </div>
+      <div class="card-body">
+        <!-- <app-data-table [labelCriar]="'Criar Algoritmo'"
+          [colunas]="colunas"
+          (deletar)="deletar($event)"
+          [rotaForm]="'/minerador/algoritmos/form'"
+          [dados]="(algoritmos$ | async)"></app-data-table> -->
+        <p-table #dt [value]="algoritmos | paginate:{itemsPerPage: 10, currentPage:p}" [responsive]="true" [rows]="10" [autoLayout]="true"
+          styleClass="table table-striped" [sortOrder]="-1">
+          <ng-template pTemplate="caption">
+            <button type="button" (click)="criar()" class="btn btn-info" style="float:right">
+              <i class="fas fa-plus"></i> Criar Algoritmo</button>
+            <div class="ui-helper-clearfix" style="text-align: left"></div>
+          </ng-template>
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th>Nome</th>
+              <th>Alias</th>
+              <th>Supervisionado</th>              
+              <th>Ação</th>
+            </tr>
+            <tr>
+              <th *ngFor="let col of colunas" [ngSwitch]="col.campo">
+                <input pInputText class="form-control" type="text" (input)="dt.filter($event.target.value.toUpperCase(), col.campo, 'contains')">
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-algoritmos>
+            <tr>
+              <td>{{algoritmos.algoritmoNomeInterno}}</td>
+              <td>{{algoritmos.algoritmoAlias}}</td>
+              <td>{{algoritmos.algoritmoSupervisionado}}</td>
+              <td>
+                <button title="Editar Registro" type="button" (click)="editar(algoritmos.algoritmoLista)" class="btn btn-info btn-rounded btn-sm"><i class="fas fa-edit"></i></button>
+                <button title="Excluir Registro" type="button"  (click)="deletar(algoritmos.algoritmoLista)" class="btn btn-danger btn-rounded btn-sm"><i class="fas fa-trash"></i></button>
+              </td>            
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td [attr.colspan]="algoritmos.length">
+                Nenhum registro encontrado
+              </td>
+            </tr>
+          </ng-template>
+
+        </p-table>
+        <div style="text-align: center;">
+            <pagination-controls directionLinks="true" responsive="true" (pageChange)="p=$event"
+                previousLabel="Anterior" nextLabel="Próximo">
+            </pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

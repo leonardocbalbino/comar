@@ -1,0 +1,32 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800');
+
+@import '~highlight.js/styles/github.css';
+
+.card-outline-info {
+  border-color: #009efb;
+}
+.card-outline-info .card-header {
+    background: linear-gradient(to right, #0178bc 0%, #00bdda 100%);
+    border-color: #009efb;
+    border-top-left-radius: .25rem !important;
+    border-top-right-radius: .25rem !important;
+}
+.card {
+  border-radius: .25rem !important;
+}
+.ui-inputtext {
+  font-size: 0.8rem !important;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}

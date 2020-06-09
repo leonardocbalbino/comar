@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+        <h4 class="mb-0 text-white">Visibilidade de Schemas</h4>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-12">
+            <p-pickList filterBy="schemaName" [showSourceControls]="false" sourceHeader="Schemas Disponíveis" targetHeader="Schemas Visíveis"
+              [showTargetControls]="false" [source]="schemas" [target]="visiveis">
+                <ng-template let-schema pTemplate="item">
+                  <div class="ui-helper-clearfix">
+                      <div>{{schema.schemaName}}</div>
+                  </div>
+              </ng-template>
+            </p-pickList>
+            </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+              <button (click)="salvar()" class="m-t-20 btn waves-effect waves-light btn-success float-right" type="button"><i class="fas fa-save"></i> Salvar</button>
+          </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>

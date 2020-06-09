@@ -1,0 +1,96 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+        <h4 class="mb-0 text-white">Explorar Grupo</h4>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-3">
+            <label>Fonte de Dados</label>
+            <div class="form-group">
+              <input class="form-control" readonly [ngModel]="grupo?.fonte.fonteAlias">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <label>Grupo Mineração</label>
+            <div class="form-group">
+              <input class="form-control" readonly [ngModel]="grupo?.grupoNome">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <label>Total de Registros</label>
+            <div class="form-group">
+              <input class="form-control" readonly [ngModel]="grupo?.grupoTotalRegistros">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <label>% Registros da Fonte</label>
+            <div class="form-group">
+              <input class="form-control" readonly [ngModel]="grupo?.porcentagemRegistrosFonte">
+            </div>
+          </div>
+        </div>
+        <ngb-tabset>
+          <ngb-tab title="Estatísticas">
+            <ng-template ngbTabContent>
+              <div *ngIf="errosStat" class="alert alert-danger alert-dismissible">
+                {{errosStat}}
+              </div>
+              <p-table *ngIf="!errosStat && estatisticas" [value]="estatisticas.linhas" [rows]="10" [paginator]="true"
+                [autoLayout]="true" styleClass="table table-striped">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th *ngFor="let col of estatisticas.colunas">
+                      {{col.nome === 'ATRIBUTO_GRUPO_ID' ? '': col.nome}}
+                    </th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-row>
+                  <tr>
+                    <td *ngFor="let col of estatisticas.colunas; let i = index">
+                      <span *ngIf="i !== estatisticas.colunas.length-1">
+                        {{row[i]}}
+                      </span>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab title="Dados">
+            <ng-template ngbTabContent>
+              <div *ngIf="erros" class="alert alert-danger alert-dismissible">
+                {{erros}}
+              </div>
+              <p-table *ngIf="!erros && resultados" [value]="resultados.linhas" [rows]="10" [paginator]="true"
+                [autoLayout]="true" styleClass="table table-striped">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th *ngFor="let col of resultados.colunas">
+                      {{col.nome}}
+                    </th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-row>
+                  <tr>
+                    <td *ngFor="let col of resultados.colunas; let i = index">
+                      {{row[i]}}
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </ng-template>
+
+          </ngb-tab>
+        </ngb-tabset>
+        <div class="row">
+          <div class="col-md-12">
+            <button (click)="voltar()" class="m-t-20 btn waves-effect waves-light btn-info" type="button"><i
+                class="fas fa-arrow-left"></i> Voltar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

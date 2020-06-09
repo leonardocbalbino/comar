@@ -1,0 +1,168 @@
+[
+    {
+        "algoritmo": {
+            "algoritmoAlias": "string",
+            "algoritmoId": 0,
+            "algoritmoNomeInterno": "string",
+            "algoritmoSupervisionado": true
+        },
+        "funcaoMineracao": {
+            "algortimosAlias": [
+                "string"
+            ],
+            "funcaoMineracaoAlgoritmos": [
+                {
+                    "algoritmo": {
+                        "algoritmoAlias": "string",
+                        "algoritmoId": 0,
+                        "algoritmoNomeInterno": "string",
+                        "algoritmoSupervisionado": true
+                    },
+                    "funcaoMineracao": {},
+                    "funcaoMineracaoAlgoritmoId": 0
+                }
+            ],
+            "funcaoMineracaoAlias": "string",
+            "funcaoMineracaoId": 0,
+            "funcaoMineracaoNomeInterno": "string",
+            "funcaoMineracaoSeparaDados": true,
+            "funcaoMineracaoSeparaDadosLabel": "string"
+        },
+        "grupo": {
+            "fonte": {
+                "fonteAlias": "string",
+                "fonteAprendizado": true,
+                "fonteArquivo": "string",
+                "fonteData": "2020-05-05T01:37:01.572Z",
+                "fonteErroCriacao": "string",
+                "fonteId": 0,
+                "fonteNome": "string",
+                "fonteSchema": "string",
+                "fonteStatusProc": "CRIADO",
+                "fonteTipo": "INTERNO",
+                "fonteTotalRegistros": 0,
+                "origem": {
+                    "origemAlias": "string",
+                    "origemDblink": "string",
+                    "origemId": 0,
+                    "origemIp": "string",
+                    "origemNome": "string",
+                    "origemPorta": "string"
+                }
+            },
+            "grupoData": "2020-05-05T01:37:01.572Z",
+            "grupoErroCriacao": "string",
+            "grupoId": 0,
+            "grupoNome": "string",
+            "grupoObjetivo": "string",
+            "grupoSchema": "string",
+            "grupoStatusProc": "CRIADO",
+            "grupoTabela": "string",
+            "grupoTotalRegistros": 0,
+            "grupoVisibilidade": "PUBLICO",
+            "porcentagemRegistrosFonte": 0,
+            "usuario": {
+                "usuarioBloqueado": 0,
+                "usuarioCpf": "string",
+                "usuarioEmail": "string",
+                "usuarioId": 0,
+                "usuarioLogin": "string",
+                "usuarioMatricula": "string",
+                "usuarioNome": "string",
+                "usuarioSenha": "string"
+            }
+        },
+        "historicos": [
+            {
+                "dadosTeste": {
+                    "dadosTesteAcuracia": 0,
+                    "dadosTestePercentual": 0,
+                    "dadosTesteSchemaMatriz": "string",
+                    "dadosTesteSchemaResult": "string",
+                    "dadosTesteTabelaMatriz": "string",
+                    "dadosTesteTabelaResult": "string",
+                    "dadosTesteUltimo": 0,
+                    "grupo": {
+                        "fonte": {
+                            "fonteAlias": "string",
+                            "fonteAprendizado": true,
+                            "fonteArquivo": "string",
+                            "fonteData": "2020-05-05T01:37:01.572Z",
+                            "fonteErroCriacao": "string",
+                            "fonteId": 0,
+                            "fonteNome": "string",
+                            "fonteSchema": "string",
+                            "fonteStatusProc": "CRIADO",
+                            "fonteTipo": "INTERNO",
+                            "fonteTotalRegistros": 0,
+                            "origem": {
+                                "origemAlias": "string",
+                                "origemDblink": "string",
+                                "origemId": 0,
+                                "origemIp": "string",
+                                "origemNome": "string",
+                                "origemPorta": "string"
+                            }
+                        },
+                        "grupoData": "2020-05-05T01:37:01.572Z",
+                        "grupoErroCriacao": "string",
+                        "grupoId": 0,
+                        "grupoNome": "string",
+                        "grupoObjetivo": "string",
+                        "grupoSchema": "string",
+                        "grupoStatusProc": "CRIADO",
+                        "grupoTabela": "string",
+                        "grupoTotalRegistros": 0,
+                        "grupoVisibilidade": "PUBLICO",
+                        "porcentagemRegistrosFonte": 0,
+                        "usuario": {
+                            "usuarioBloqueado": 0,
+                            "usuarioCpf": "string",
+                            "usuarioEmail": "string",
+                            "usuarioId": 0,
+                            "usuarioLogin": "string",
+                            "usuarioMatricula": "string",
+                            "usuarioNome": "string",
+                            "usuarioSenha": "string"
+                        }
+                    },
+                    "historicoId": 0
+                },
+                "descricaoHistorico": "string",
+                "historicoData": "2020-05-05T01:37:01.572Z",
+                "historicoErro": "string",
+                "historicoEvento": "CADASTRADO",
+                "historicoId": 0,
+                "historicoUltimo": 0,
+                "usuario": {
+                    "usuarioBloqueado": 0,
+                    "usuarioCpf": "string",
+                    "usuarioEmail": "string",
+                    "usuarioId": 0,
+                    "usuarioLogin": "string",
+                    "usuarioMatricula": "string",
+                    "usuarioNome": "string",
+                    "usuarioSenha": "string"
+                }
+            }
+        ],
+        "modeloAcuraciaMedia": "string",
+        "modeloId": 0,
+        "modeloNome": "string",
+        "modeloPercentGrupo": 0,
+        "modeloPercentTreino": 0,
+        "modeloPublicado": "SIM",
+        "modeloSchemaConfig": "string",
+        "modeloTabelaConfig": "string",
+        "usuario": {
+            "usuarioBloqueado": 0,
+            "usuarioCpf": "string",
+            "usuarioEmail": "string",
+            "usuarioId": 0,
+            "usuarioLogin": "string",
+            "usuarioMatricula": "string",
+            "usuarioNome": "string",
+            "usuarioSenha": "string"
+        }
+    }
+]

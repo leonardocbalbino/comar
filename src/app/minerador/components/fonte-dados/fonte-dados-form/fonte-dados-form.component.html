@@ -1,0 +1,191 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+        <h4 class="mb-0 text-white">{{acao}} Fonte de Dados</h4>
+      </div>
+      <div class="card-body">
+        <h4 class="card-title"></h4>
+        <ngb-tabset>
+          <ngb-tab title="Definição">
+            <ng-template ngbTabContent>
+              <div class="row p-t-20">
+                <div class="col-md-2">
+                  <label>Tipo de Fonte</label>
+                  <div class="form-group">
+                    <select class="form-control" [(ngModel)]="fonte.fonteTipo" [disabled]="fonte.fonteId">
+                      <option value="INTERNO">INTERNO</option>
+                      <option value="EXTERNO">EXTERNO</option>
+                      <option value="INTEGRACAO" disabled>INTEGRACAO</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <label>Nome</label>
+                  <div class="form-group">
+                    <input class="form-control" [(ngModel)]="fonte.fonteAlias">
+                  </div>
+                </div>
+                <div class="col-md-3" *ngIf="fonte.fonteTipo === 'INTERNO'">
+                  <label>Esquema</label>
+                  <div class="form-group">
+                    <ng-select [disabled]="fonte.fonteId"
+                      [ngClass]="(fonte.fonteId) ? 'disable-arrow disable-dropdown disable-clear-all' : ''"
+                      [items]="schemas$ | async" bindLabel="schemaName" bindValue="schemaName"
+                      notFoundText="Nenhum esquema encontrado" (change)="onChangeEsquema()"
+                      [(ngModel)]="fonte.fonteSchema">
+                    </ng-select>
+                  </div>
+                </div>
+                <div class="col-md-4" *ngIf="fonte.fonteTipo === 'INTERNO' || fonte.fonteTipo === 'INTEGRACAO'">
+                  <div class="form-group">
+                    <label>Tabela/Visão</label>
+                    <ng-select [disabled]="fonte.fonteId"
+                      [ngClass]="(fonte.fonteId) ? 'disable-arrow disable-dropdown disable-clear-all' : ''"
+                      [items]="tabelas$ | async" bindLabel="tableName" bindValue="tableName"
+                      notFoundText="Nenhuma Tabela/Visão encontrada" [(ngModel)]="fonte.fonteNome">
+                    </ng-select>
+                  </div>
+                </div>
+                <div class="col-md-4" *ngIf="fonte.fonteTipo === 'EXTERNO'">
+                  <label>Importar Arquivo (*.csv)</label>
+                  <input type="file" name="file" (change)="onFileChange($event)" />
+                </div>
+              </div>
+              <div class="row p-t-20" style="display: none;">
+                <div class="col-md-12">
+                  <div class="form-check form-check-inline">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" [(ngModel)]="fonte.fonteAprendizado" class="custom-control-input" id="aprendizado">
+                        <label class="custom-control-label"  for="aprendizado">Permitir treinar modelos a partir desta fonte de dados</label>
+                    </div>
+                </div>
+                </div>
+              </div>
+              <div class="row p-t-20">
+                <div class="col-md-12">
+                  <button (click)="voltar()" class="m-t-20 btn waves-effect waves-light btn-info" type="button"><i
+                      class="fas fa-arrow-left"></i> Voltar</button>
+                  <button type="button" (click)="salvarFonte()" class="btn btn-success" style="float:right"><i
+                      class="fas fa-save"></i> Salvar Definição</button>
+                </div>
+              </div>
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab title="Estrutura" [disabled]="!fonte?.fonteId">
+            <ng-template ngbTabContent>
+              <div class="row">
+                <div class="col-6">
+                  <div class="card">
+
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-lg-12 col-xlg-6 m-b-30">
+                          <h4 class="card-title">Atributos Disponíveis</h4>
+                          <button type="button" (click)="sendChecked()" title="Enviar Selecionados"
+                            class="btn btn-outline-success"><i class="fas fa-arrow-right"></i> Enviar
+                            Selecionados</button>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div style="height: 400px; overflow-y: scroll; overflow: auto">
+                            <p-tree [value]="baseDados" emptyMessage="Selecione uma tabela, ou importe um arquivo"
+                              [(selection)]="atributosSel" selectionMode="checkbox" draggableNodes="true"
+                              draggableScope="pastas"></p-tree>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6" *ngIf="fonte.fonteId">
+                  <div class="card">
+
+
+                    <div class="card-body" *ngIf="fonte.fonteId">
+
+                      <div class="row">
+                        <div class="col-lg-12 col-xlg-6 m-b-30">
+                          <h4 class="card-title">Atributos Selecionados</h4>
+                          <button type="button" (click)="openModal('Nova')" title="Nova Pasta"
+                            class="btn btn-outline-primary"><i class="fas fa-star"></i> Nova Pasta</button>
+                          <button type="button" (click)="openModal('Renomear')" title="Renomear Pasta/Atributo"
+                            class="btn btn-outline-secondary"><i class="fas fa-edit"></i> Renomear</button>
+                          <button type="button" (click)="excluirItem()" title="Excluir Pasta/Atributo"
+                            class="btn btn-outline-danger"><i class="fas fa-times"></i> Excluir</button>
+                          <div ngbDropdown class="d-inline-block">
+                              <button
+                                class="btn btn-outline-info"
+                                id="dropdownBasic1"
+                                ngbDropdownToggle
+                              >
+                                Modo de Seleção
+                              </button>
+                              <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                <button (click)="changeMode('multiple')" class="dropdown-item">Múltiplo</button>
+                                <button (click)="changeMode('checkbox')" class="dropdown-item">Caixa de Seleção</button>
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div style="height: 300px; overflow-y: scroll;">
+                            <p-tree [value]="pastas" (onNodeSelect)="nodeSelect($event)"
+                              emptyMessage="Nenhuma pasta encontrada"
+                              [propagateSelectionUp]="false"
+                              [selectionMode]='selectionMode'
+                              [(selection)]="nodeSel"
+                              draggableNodes="true" droppableNodes="true"
+                              droppableScope="pastas" draggableScope="fonte"
+                              [validateDrop]="true" (onNodeDrop)="onDrop($event)"></p-tree>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </ngb-tab>
+        </ngb-tabset>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalPasta let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{acaoModal}} Pasta</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <input class="form-control" autofocus [(ngModel)]="nomePasta" type="text" placeholder="Nome da Pasta" />
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="salvarPasta()">Salvar</button>
+  </div>
+</ng-template>
+
+<ng-template #modalAtributo let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{acaoModal}} Atributo</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <input class="form-control" autofocus [(ngModel)]="nomeAtributo" type="text" placeholder="Nome do Atributo" />
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="salvarAtributo()">Salvar</button>
+  </div>
+</ng-template>

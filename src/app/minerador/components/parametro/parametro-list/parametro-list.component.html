@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col-lg-12">
+      <div class="card card-outline-info">
+          <div class="card-header">
+            <h4 class="mb-0 text-white">Parâmetros da Mineração</h4>
+          </div>
+          <div class="card-body">
+          <app-data-table [labelCriar]="'Criar Parâmetro'"
+          [colunas]="colunas"
+          (deletar)="deletar($event)"
+          [rotaForm]="'/minerador/parametros/form'"
+          [dados]="(parametros$ | async)"></app-data-table>
+          </div>
+      </div>
+  </div>
+</div>

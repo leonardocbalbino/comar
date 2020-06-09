@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+        <h4 class="mb-0 text-white">Configuração de Regras de Usuário de Classificação</h4>
+      </div>
+      <form class="col-12 row" [formGroup]="consultaForm" novalidate style="margin: 0; margin-top: 20px;">
+        <div class="col-xs-12 col-sm-12 col-md-3 form-group">
+          <label>Nome:</label>
+          <input type="text" class="form-control formStyles" formControlName="regraManualNome">
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-3 form-group">
+          <label>Justificativa:</label>
+          <input type="text" class="form-control formStyles" formControlName="regraManualJustificativa">
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-3 form-group">
+          <label>Data de Cadastro:</label>
+          <div>
+            <p-calendar dateFormat="dd/mm/yy" placeholder="dd/mm/aaaa" [showIcon]="true"
+              [locale]="pt" appendTo="body" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030"
+              [readonlyInput]="true" formControlName="regraManualDataCadastro" showButtonBar="true">
+            </p-calendar>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-3 form-group d-flex align-items-end" style="padding-left: 5px;">
+          <button class="btn btn-info col-12" (click)="localizar()" style="height: calc(1.5em + 0.75rem + 2px); border-radius: 0;">Localizar</button>
+        </div>
+      </form>
+      <div class="col-12 row" style="margin: 0;">
+        <div class="col-xs-12 col-sm-12 col-md-3">
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-3">
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-3">
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-3 form-group d-flex justify-content-end" style="padding-right: 5px; height: calc(1.5em + 0.75rem + 2px);">
+          <button class="btn btn-success col-12" style="border-radius: 0;" (click)="criarRegistro()">Nova Regra</button>
+        </div>
+      </div>
+      <div class="card-body" style="padding-top: 5px;">
+        <app-table-regras-manuais [rowExpanded]="true" [consultaForm]="consultaForm" (deletar)="deletar($event)" [colunas]="colunas" [dados]="regras">
+        </app-table-regras-manuais>
+      </div>
+    </div>
+  </div>
+</div>

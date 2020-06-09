@@ -1,0 +1,176 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card card-outline-info">
+            <div class="card-header">
+                <h4 class="mb-0 text-white">Modelos Cadastrados</h4>
+            </div>
+            <div class="card-body">
+                <p-table #dt [value]="modelo | paginate:{itemsPerPage: 10, currentPage:p}" [responsive]="true"
+                    [rows]="5" [autoLayout]="true" styleClass="table table-striped" [sortOrder]="-1">
+                    <ng-template pTemplate="caption">
+                        <button type="button" (click)="criarRegistro()" class="btn btn-info" style="float:right">
+                            <i class="fas fa-plus"></i> Criar Modelo</button>
+                        <div class="ui-helper-clearfix" style="text-align: left"></div>
+                    </ng-template>
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Grupo</th>
+                            <th>Função</th>
+                            <th>Algoritmo</th>
+                            <th>Publicado</th>
+                            <th>Status</th>
+                            <th>Ação</th>
+                        </tr>
+                        <tr>
+                            <th *ngFor="let col of colunas" [ngSwitch]="col.campo">
+                                <input pInputText class="form-control" type="text"
+                                (input)="dt.filter($event.target.value.toUpperCase(), col.campo, 'contains')">
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-modelo>
+                        <tr>
+                            <td>{{modelo.nome}}</td>
+                            <td>{{modelo.grupo}}</td>
+                            <td>{{modelo.funcao}}</td>
+                            <td>{{modelo.algoritmo}}</td>
+                            <td>{{modelo.publicado}}</td>
+                            <td>{{modelo.descricaoHistorico}}</td>
+                            <td width="21%">
+                                <button title="Histórico" type="button" (click)="historico(modelo.listaModelo)"
+                                    class="btn btn-info btn-rounded btn-sm"><i class="fas fa-history"></i></button>
+                                <button title="Configurar" type="button" (click)="editar(modelo,modelo.status)"
+                                    class="btn btn-success btn-rounded btn-sm"><i class="fas fa-cog"></i></button>
+                                <!-- <button title="Configurar" type="button" (click)="testa(modelo,modelo.status)"
+                                    class="btn btn-success btn-rounded btn-sm"><i class="fas fa-cog"></i></button> -->
+
+                                <!-- Treinar -->
+                                <button *ngIf="modelo.status === 'CADASTRADO'  || modelo.status === 'ERRO_AO_TREINAR'"
+                                    href="javascript:" title="Treinar" type="button" (click)="treinaModelo(modelo)"
+                                    class="btn btn-warning btn-rounded btn-sm"><i class="fab fa-leanpub"></i></button>
+                                <button *ngIf="modelo.status === 'TREINO_INICIADO'" href="javascript:"
+                                    href="javascript:" title="Treinar" type="button"
+                                    (click)="warning('O treino está em execução!')"
+                                    class="btn btn-warning btn-rounded btn-sm"><i class="fab fa-leanpub"></i></button>
+                                <button
+                                    *ngIf="modelo.status === 'TESTE_INICIADO' || modelo.status === 'TESTADO' || modelo.status === 'ERRO_AO_TESTAR' || modelo.status === 'TREINADO'"
+                                    href="javascript:" href="javascript:" title="Treinar" type="button"
+                                    (click)="warning('Você ja treinou este modelo!')"
+                                    class="btn btn-warning btn-rounded btn-sm"><i class="fab fa-leanpub"></i></button>
+
+                                <!-- Testar -->
+                                <button
+                                    *ngIf="modelo.status === 'CADASTRADO'  || modelo.status === 'ERRO_AO_TREINAR'  || modelo.status === 'TREINO_INICIADO'"
+                                    href="javascript:" title="Testar" type="button"
+                                    (click)="warning('Teste só pode ser executado após o treino ser concluído!')"
+                                    class="btn btn-primary btn-rounded btn-sm"><i
+                                        class="fas fa-check-circle"></i></button>
+                                <button *ngIf="modelo.status === 'TESTE_INICIADO'" href="javascript:" title="Testar"
+                                    type="button" (click)="warning('Teste está em execução!')"
+                                    class="btn btn-primary btn-rounded btn-sm"><i
+                                        class="fas fa-check-circle"></i></button>
+                                <button *ngIf="modelo.status === 'ERRO_AO_TESTAR' || modelo.status === 'TREINADO'"
+                                    href="javascript:" title="Testar" type="button" (click)="testa(modelo)"
+                                    class="btn btn-primary btn-rounded btn-sm"><i
+                                        class="fas fa-check-circle"></i></button>
+                                <!-- <button *ngIf="modelo.status === 'TESTADO' " href="javascript:" title="Testar"
+                                    type="button" (click)="warning('Você já testou este Modelo!')"
+                                    class="btn btn-primary btn-rounded btn-sm"><i
+                                        class="fas fa-check-circle"></i></button> -->
+                                <button *ngIf="modelo.status === 'TESTADO' " href="javascript:" title="Testar"
+                                    type="button" (click)="testa(modelo)" class="btn btn-primary btn-rounded btn-sm"><i
+                                        class="fas fa-check-circle"></i></button>
+                                <button href="javascript:" title="Excluir" type="button" (click)="deletaModelo(modelo)"
+                                    class="btn btn-danger btn-rounded btn-sm"><i class="fas fa-trash"></i></button>
+
+                                <!-- Checkbox de comparação -->
+                                <a href="javascript:" placement="top" ngbTooltip="Selecionar"
+                                    (click)="selecionaModelo(modelo)"><input type="checkbox"></a>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template #modalTeste let-modal>
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modal-basic-title">Teste do modelo {{tituloModal}}</h4>
+                            <button type="button" class="close" aria-label="Close"
+                                (click)="modal.dismiss('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-md-12">
+                                <h6 class="modal-title" id="modal-basic-title">Preencha as informações abaixo:</h6>
+                                <div class="row p-t-20">
+                                    <div class="col-md-8">
+                                        <label>Grupo de teste</label>
+                                        <div class="form-group">
+                                            <ng-select [items]="grupo$ | async" bindLabel="grupoNome"
+                                                notFoundText="Nenhum grupo encontrado" [(ngModel)]="grupoModal">
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>% dados de grupo</label>
+                                        <div class="form-group">
+                                            <ng-select [items]="listaPercentual" bindLabel="descricao"
+                                                [(ngModel)]="percentGrupoModal">
+                                            </ng-select>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <pre><code [highlight]="sql" style="height: 400px;">
+                                  {{sql}}
+                              </code></pre> -->
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark"
+                                (click)="modal.dismiss('Cross click')">Fechar</button>
+                            <button type="button" (click)="testaModelo()" class="btn btn-info" style="float:right">
+                                <i class="fas fa-check-circle"></i> Testar</button>
+                        </div>
+                    </ng-template>
+                    <ng-template #modalErro let-modal>
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modal-basic-title">Erro no processamento</h4>
+                            <button type="button" class="close" aria-label="Close"
+                                (click)="modal.dismiss('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-md-12">
+                                <strong>{{erro}}</strong>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark"
+                                (click)="modal.dismiss('Cross click')">Fechar</button>
+                        </div>
+                    </ng-template>
+
+
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td [attr.colspan]="modelo.length">
+                                Nenhum registro encontrado
+                            </td>
+                        </tr>
+                    </ng-template>
+
+                </p-table>
+                <div style="text-align: center;">
+                    <pagination-controls directionLinks="true" responsive="true" (pageChange)="p=$event"
+                        previousLabel="Anterior" nextLabel="Próximo">
+                    </pagination-controls>
+                </div>
+
+                <button type="button" (click)="comparaModelo()" class="btn btn-info" style="float:right">
+                    <i class="fas fa-file-medical-alt"></i> Comparar modelos</button>
+                <div class="ui-helper-clearfix" style="text-align: left"></div>
+            </div>
+        </div>
+    </div>
+</div>
